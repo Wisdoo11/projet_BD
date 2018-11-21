@@ -5,38 +5,38 @@ public class SimpleQuery {
     static final String CONN_URL = "jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1";
     static final String USER = "herbrets";
     static final String PASSWD = "herbrets";
-    static final String PRE_STMT = "select * from emp";
+    static final String PRE_STMT = "select * from Salle1";
 
     public SimpleQuery() {
         try {
 	    // Enregistrement du driver Oracle
 	    System.out.print("Loading Oracle driver... ");
 	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-            System.out.println("loaded");
+      System.out.println("loaded");
 
 	    // Etablissement de la connection
 	    System.out.print("Connecting to the database... ");
 	    Connection conn = DriverManager.getConnection(CONN_URL, USER, PASSWD);
-            System.out.println("connected");
+      System.out.println("connected");
 
 	    // Creation de la requete
-            PreparedStatement stmt = conn.prepareStatement(PRE_STMT);
+      PreparedStatement stmt = conn.prepareStatement(PRE_STMT);
 	    // Execution de la requete
-            ResultSet rset = stmt.executeQuery();
+      ResultSet rset = stmt.executeQuery();
 	    // Affichage du resultat
-            System.out.println("Results:");
-            dumpResultSet(rset);
-            System.out.println("");
+      System.out.println("Results:");
+      dumpResultSet(rset);
+      System.out.println("");
 
 	    // Fermeture
 	    rset.close();
-            stmt.close();
-            conn.close();
+      stmt.close();
+      conn.close();
 
-        } catch (SQLException e) {
-            System.err.println("failed");
-            e.printStackTrace(System.err);
-        }
+      } catch (SQLException e) {
+          System.err.println("failed");
+          e.printStackTrace(System.err);
+      }
     }
 
     private void dumpResultSet(ResultSet rset) throws SQLException {
@@ -45,8 +45,8 @@ public class SimpleQuery {
         while (rset.next()) {
             for (int j = 1; j <= i; j++) {
                 System.out.print(rset.getString(j) + "\t");
-	    }
-	    System.out.println();
+	           }
+	      System.out.println();
         }
     }
 

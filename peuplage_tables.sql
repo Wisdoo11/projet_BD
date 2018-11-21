@@ -13,6 +13,7 @@ insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Ve
 select * from Produit1;
 
 insert into Salle1(nom_categorie) values ('Vetements');
+insert into Salle1(nom_categorie) values ('Jouets');
 select * from Salle1;
 
 
