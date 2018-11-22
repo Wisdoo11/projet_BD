@@ -15,11 +15,14 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
 
+import java.util.*;
+
+
 public class SalleDialog extends JDialog {
   private ZDialogInfo zInfo = new ZDialogInfo();
   private boolean sendData;
   private JLabel nomLabel, CategorieLabel, produitLabel, venteLabel,vente2Label, typeLabel, prixLabel,prix2Label, icon;
-  private JComboBox Categorie, produit, type;
+  private JComboBox Categorie, produit, type, Produit;
   private JTextField nom, vente, prix;
 
   public SalleDialog(JFrame parent, String title, boolean modal){
@@ -61,10 +64,17 @@ public class SalleDialog extends JDialog {
     panCategorie.setBackground(Color.white);
     panCategorie.setPreferredSize(new Dimension(250, 80));
     panCategorie.setBorder(BorderFactory.createTitledBorder("Catégorie d'objets"));
+
+    Requete requete = new Requete("jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1", "herbrets", "herbrets", "select nom from Categorie1");
+    ArrayList<String> selection = requete.getSelection();
+
     Categorie = new JComboBox();
-    Categorie.addItem("Jouets");
-    Categorie.addItem("Vêtements");
-    Categorie.addItem("Electroménager");
+    for (String elt : selection) {
+      Categorie.addItem(elt);
+    }
+    // Categorie.addItem("Jouets");
+    // Categorie.addItem("Vêtements");
+    // Categorie.addItem("Electroménager");
     CategorieLabel = new JLabel("Catégorie : ");
     panCategorie.add(CategorieLabel);
     panCategorie.add(Categorie);
@@ -96,16 +106,30 @@ public class SalleDialog extends JDialog {
     panType.add(typeLabel);
     panType.add(type);
 
+
+
     //Le produit
     JPanel panProduit = new JPanel();
     panProduit.setBackground(Color.white);
     panProduit.setPreferredSize(new Dimension(250, 80));
     panProduit.setBorder(BorderFactory.createTitledBorder("Le(s) produit(s)"));
     produit = new JComboBox();
-    produit.addItem("chaussettes");
-    produit.addItem("pantoufles");
-    produit.addItem("mocassins");
-    produit.addItem("savates");
+
+    String catSelectionne = (String)Categorie.getSelectedItem();
+
+    Requete requete2 = new Requete("jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1", "herbrets", "herbrets", "select Produit1.nom from Produit1 where Produit1.nom_categorie = " + catSelectionne);
+    ArrayList<String> selectionCategorie = requete2.getSelection();
+
+    Produit = new JComboBox();
+    for (String elt : selectionCategorie) {
+      produit.addItem(elt);
+    }
+
+
+    // produit.addItem("chaussettes");
+    // produit.addItem("pantoufles");
+    // produit.addItem("mocassins");
+    // produit.addItem("savates");
     produitLabel = new JLabel("Produit");
     panProduit.add(produitLabel);
     panProduit.add(produit);
