@@ -25,10 +25,19 @@ public class RequeteSansCo {
 		// Affichage du resultat
 	    System.out.println("Results:");
 	    dumpResultSet(rset);
-	    //System.out.println("");
 
 		// Fermeture
 		rset.close();
+	    stmt.close();
+	}
+	
+	public void executeUpdateReq() throws SQLException {
+		// Creation de la requete
+	    PreparedStatement stmt = conn.prepareStatement(this.preStmt);
+		// Execution de la requete
+	    int rset = stmt.executeUpdate();
+	    System.out.println("Nombre d'élèments ajoutés : " + rset); // TODO à modifier
+		// Fermeture
 	    stmt.close();
 	}
 	
