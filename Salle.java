@@ -1,7 +1,6 @@
-package Salle;
+package projet_BD;
 
 import Produits.Categorie;
-import projet_BD.Requete;
 
 public class Salle {
 	

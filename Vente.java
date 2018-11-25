@@ -1,10 +1,8 @@
-package Salle;
+package projet_BD;
 
 import java.util.Date;
 
 import Produits.Produit;
-import projet_BD.Enchere;
-import projet_BD.Requete;
 
 public class Vente {
 	
