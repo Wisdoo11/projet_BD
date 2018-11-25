@@ -3,6 +3,7 @@ package Salle;
 import java.util.Date;
 
 import Produits.Produit;
+import projet_BD.Enchere;
 import projet_BD.Requete;
 
 public class Vente {
@@ -12,6 +13,11 @@ public class Vente {
 	private Salle salle;
 	private float prixDeDepart;
 	private Date dateFin;
+	private boolean estMontante;
+	private boolean estRevocable;
+	private boolean estDureeLibre;
+	private boolean encherirPlusieursFois;
+	
 	
 	public Vente(Produit produit, Salle salle, float prix, Date date) {
 		this.produit = produit;
@@ -22,6 +28,21 @@ public class Vente {
 	
 	private void setDate() {
 		// TODO pour récupérer l'ID vente
+	}
+	
+	private void accepterEnchere(Enchere enchere) {
+		//TODO a completer
+		/* pour récupérer les utilisateurs qui ont enchérir sur ce produit
+		 req1 : select email from Enchere1
+		 where idVente = this.idVente
+		 pour récupérer les prix unitaires proposée par les utilisateurs :
+		 select prix_propose, quantite from Enchere1 where idVente = this.idVente
+		 prix_unitaire = prix_propose/quantite
+		 if montante et prix_propose <= max(prix_unitaire) : return false
+		 sinon return true
+		 if descendante :
+		 if l'utilisateur a déjà enchéri et vente ne permet pas d'enchérir plusieurs fois :
+		  */
 	}
 	
 	public void ajouter() {
