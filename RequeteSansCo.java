@@ -13,7 +13,7 @@ public class RequeteSansCo {
 	
 	public RequeteSansCo(Connection conn, String preStmt) {
 		this.conn = conn;
-		this.preStmt = preStmt;		
+		this.preStmt = preStmt;
 	}
 	
 	public void execute() throws SQLException {

@@ -37,17 +37,11 @@ public class Salle {
 	}
 	
 	public void ajouter() {
-		// TODO on n'a pas besoin de se reconnecter sur le serveur à chaque fois que l'on fait une requête !!
-	    String connUrl = "jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1";
-	    String user = "vilayvos";
-	    String passwd = "vilayvos";
-	    //TODO
-
 	    String preStmt = "insert into Salle1 values ('" + this.categorie.getNomCategorie() + "', '" 
 	    + this.montante + "', '" + this.dureeLibre + "', '" 
 	    + this.nonRevocable + "', '" + this.encherirPlusieursFois + "');";
 	    System.out.println(preStmt);
-	    Requete requete = new Requete(connUrl, user, passwd, preStmt);
+	    Requete requete = new Requete(preStmt);
 	    requete.execute();
 	}
 	

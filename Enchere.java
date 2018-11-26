@@ -19,13 +19,9 @@ public class Enchere {
   }
 
   public void ajouter() {
-    String connUrl = "jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1";
-    String user = "herbrets";
-    String passwd = "herbrets";
-
     String preStmt = "insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values ('" + this.emailUtilisateur + "', " + this.idVente + ", " + this.prixPropose + ", " + this.temps + ", " + this.quantite + ")";
     System.out.println(preStmt);
-    Requete requete = new Requete(connUrl, user, passwd, preStmt);
+    Requete requete = new Requete(preStmt);
     requete.execute();
   }
 }

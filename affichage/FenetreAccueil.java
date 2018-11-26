@@ -18,6 +18,7 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 public class FenetreAccueil extends JFrame {
 	
@@ -68,8 +69,7 @@ public class FenetreAccueil extends JFrame {
 	    // bouton utilisateur
 	    bouton1.addActionListener(new ActionListener(){
 		    public void actionPerformed(ActionEvent arg0) {
-		    	FenetreDeConnexion fenetreConnexion = new FenetreDeConnexion(null, "Connexion", true, false);
-		    	fenetreConnexion.afficher();
+		    	FenetreUtilisateur fenetreUtilisateur = new FenetreUtilisateur(null, "Bienvenue", true);
 		        }
 	    	}
 	    );
@@ -85,9 +85,9 @@ public class FenetreAccueil extends JFrame {
 	    this.setVisible(true);
 	}
 	
-
+	/*
 	public static void main(String[] args) {
 		FenetreAccueil fenetre = new FenetreAccueil();
-	}
+	}*/
 
 }

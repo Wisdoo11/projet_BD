@@ -17,6 +17,8 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
 
+import projet_BD.Requete;
+
 import java.util.*;
 
 
@@ -27,10 +29,12 @@ public class SalleDialog extends JDialog {
 	private JLabel nomLabel, CategorieLabel, produitLabel, venteLabel,vente2Label, typeLabel, prixLabel,prix2Label, icon;
 	private JComboBox Categorie, produit, type, Produit;
 	private JTextField nom, vente, prix;
+	private String catSelectionne;
 
-	public SalleDialog(JFrame parent, String title, boolean modal){
+	public SalleDialog(JFrame parent, String title, boolean modal, String catSelectionne){
 		super(parent, title, modal);
-		this.setSize(700, 300);
+		this.catSelectionne = catSelectionne;
+		this.setSize(700, 400);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -68,21 +72,27 @@ public class SalleDialog extends JDialog {
     	panCategorie.setPreferredSize(new Dimension(250, 80));
     	panCategorie.setBorder(BorderFactory.createTitledBorder("Catégorie d'objets"));
 
-    	// TODO connexion à la BD pour récupérer les données !
-    	//Requete requete = new Requete("jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1", "herbrets", "herbrets", "select nom from Categorie1");
-    	//ArrayList<String> selection = requete.getSelection();
+    	Requete requete = new Requete("select nom from Categorie1");
+		ArrayList<String[]> selection = new ArrayList<String[]>();
+		requete.getSelection(selection);
 
     	Categorie = new JComboBox();
-    	//for (String elt : selection) {
-    		//Categorie.addItem(elt);
-    	//}
-    	Categorie.addItem("Jouets");
-    	Categorie.addItem("Vêtements");
-    	Categorie.addItem("Electroménager");
-    	CategorieLabel = new JLabel("Catégorie : ");
+    	int item = 1;
+    	int pos = 2;
+    	System.out.println(catSelectionne);
+    	for (String[] elt : selection) {
+    		for (String i:elt) {
+    			if (i.equals(catSelectionne)) {
+    				pos = item;
+    			}
+    			Categorie.addItem(i);
+    		}
+    		item++;
+    	}
+    	CategorieLabel = new JLabel("Catégorie : " + catSelectionne);
     	panCategorie.add(CategorieLabel);
-    	panCategorie.add(Categorie);
-
+    	Categorie.setSelectedIndex(pos-1);
+    	
 
     	//Le nombre de ventes
     	JPanel panVente = new JPanel();
@@ -108,32 +118,31 @@ public class SalleDialog extends JDialog {
     	typeLabel = new JLabel("Type : ");
     	panType.add(typeLabel);
     	panType.add(type);
-
-    	//Le produit
+    	
+    	
+    	//Le nom du produit
     	JPanel panProduit = new JPanel();
     	panProduit.setBackground(Color.white);
     	panProduit.setPreferredSize(new Dimension(250, 80));
     	panProduit.setBorder(BorderFactory.createTitledBorder("Le(s) produit(s)"));
     	produit = new JComboBox();
     	
-    	String catSelectionne = (String)Categorie.getSelectedItem();
+    	String catSelectionne = (String) Categorie.getSelectedItem();
+    	Requete requete2 = new Requete("select Produit1.nom from Produit1 where Produit1.nom_categorie = " + catSelectionne);
+    	ArrayList<String[]> selectionCategorie = new ArrayList<String[]>();
+    	requete2.getSelection(selectionCategorie);
+    	
+    	//
+    	ListeProduit listeP = new ListeProduit(catSelectionne);
+    	ArrayList<String> lp = listeP.afficheListe();
 
-    	// TODO connexion à la BD pour récupérer les données !
-    	//Requete requete2 = new Requete("jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1", "herbrets", "herbrets", "select Produit1.nom from Produit1 where Produit1.nom_categorie = " + catSelectionne);
-    	//ArrayList<String> selectionCategorie = requete2.getSelection();
-
-    	Produit = new JComboBox();
-    	//for (String elt : selectionCategorie) {
-    	//	produit.addItem(elt);
-    	//}
-
-    	produit.addItem("chaussettes");
-    	produit.addItem("pantoufles");
-    	produit.addItem("mocassins");
-    	produit.addItem("savates");
-    	produitLabel = new JLabel("Produit");
+    	for (String elt : lp) {
+    		produit.addItem(elt);
+    	}
+    	produitLabel = new JLabel("Nom du produit");
     	panProduit.add(produitLabel);
     	panProduit.add(produit);
+    	
 
     	//Le prix de vente
     	JPanel panPrix = new JPanel();
@@ -152,9 +161,9 @@ public class SalleDialog extends JDialog {
     	content.setBackground(Color.white);
     	content.add(panNom);
     	content.add(panCategorie);
+    	content.add(panProduit);
     	content.add(panVente);
     	content.add(panType);
-    	content.add(panProduit);
     	content.add(panPrix);
 
 

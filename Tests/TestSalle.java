@@ -2,7 +2,7 @@ package Tests;
 
 import Produits.Categorie;
 import Produits.CategorieProduit;
-import Salle.Salle;
+import projet_BD.Salle;
 
 public class TestSalle {
 

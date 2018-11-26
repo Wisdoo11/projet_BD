@@ -18,18 +18,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import projet_BD.Requete;
+
 public class FenetreVendreProduit extends JDialog{
 	
 	private String email;
 	private JLabel emailLabel, nomLabel, prixLabel, CategorieLabel, prix2Label;
-	private JComboBox categorieBox, nomBox;
-	private JTextField prixText, stockText;
-	private ConfirmationVente confirmation;
+	private JComboBox categorieBox, nomBox, produit;
+	private JTextField prixText, stockText, emailText, catText;
+	private String catSelectionne;
 	private InfoProduitAVendre info;
 
-	public FenetreVendreProduit(JFrame parent, String title, boolean modal, String email){
+	public FenetreVendreProduit(JFrame parent, String title, boolean modal, String email, String catSelectionne){
 		super(parent, title, modal);
 		this.email = email;
+		this.catSelectionne = catSelectionne;
 		this.setSize(600, 400);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -49,52 +52,58 @@ public class FenetreVendreProduit extends JDialog{
     	panEmail.setPreferredSize(new Dimension(250, 80));
     	panEmail.setBorder(BorderFactory.createTitledBorder("Identité du vendeur"));
     	emailLabel = new JLabel("Votre identité : " + email);
+    	emailText = new JTextField(email);
     	panEmail.add(emailLabel);
 
-    	//La catégorie du produit
+    	//La catégorie de la salle
     	JPanel panCategorie = new JPanel();
     	panCategorie.setBackground(Color.white);
     	panCategorie.setPreferredSize(new Dimension(250, 80));
     	panCategorie.setBorder(BorderFactory.createTitledBorder("Catégorie d'objets"));
 
-    	//Requete requete = new Requete("jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1", "herbrets", "herbrets", "select nom from Categorie1");
-    	//ArrayList<String> selection = requete.getSelection();
+    	Requete requete = new Requete("select nom from Categorie1");
+		ArrayList<String[]> selection = new ArrayList<String[]>();
+		requete.getSelection(selection);
 
     	categorieBox = new JComboBox();
-    	//for (String elt : selection) {
-    	//	categorieBox.addItem(elt);
-    	//}
-    	categorieBox.addItem("Jouets"); // pour le test
-    	categorieBox.addItem("Vêtements"); // pour le test
-    	categorieBox.addItem("Electroménager"); // pour le test
-    	CategorieLabel = new JLabel("Catégorie : ");
+    	int item = 1;
+    	int pos = 2;
+    	System.out.println(catSelectionne);
+    	for (String[] elt : selection) {
+    		for (String i:elt) {
+    			if (i.equals(catSelectionne)) {
+    				pos = item;
+    			}
+    			categorieBox.addItem(i);
+    		}
+    		item++;
+    	}
+    	CategorieLabel = new JLabel("Catégorie : " + catSelectionne);
     	panCategorie.add(CategorieLabel);
-    	panCategorie.add(categorieBox);
+    	categorieBox.setSelectedIndex(pos-1);
 
     	//Le nom du produit
-    	JPanel panNom = new JPanel();
-    	panNom.setBackground(Color.white);
-    	panNom.setPreferredSize(new Dimension(250, 80));
-    	panNom.setBorder(BorderFactory.createTitledBorder("Le(s) produit(s)"));
-    	nomBox = new JComboBox();
+    	JPanel panProduit = new JPanel();
+    	panProduit.setBackground(Color.white);
+    	panProduit.setPreferredSize(new Dimension(250, 80));
+    	panProduit.setBorder(BorderFactory.createTitledBorder("Le(s) produit(s)"));
+    	produit = new JComboBox();
     	
-    	//String catSelectionne = (String) categorieBox.getSelectedItem();
+    	String catSelectionne = (String) categorieBox.getSelectedItem();
+    	Requete requete2 = new Requete("select Produit1.nom from Produit1 where Produit1.nom_categorie = " + catSelectionne);
+    	ArrayList<String[]> selectionCategorie = new ArrayList<String[]>();
+    	requete2.getSelection(selectionCategorie);
+    	
+    	//
+    	ListeProduit listeP = new ListeProduit(catSelectionne);
+    	ArrayList<String> lp = listeP.afficheListe();
 
-    	//Requete requete2 = new Requete("jdbc:oracle:thin:@ensioracle1.imag.fr:1521:ensioracle1", "herbrets", "herbrets", "select Produit1.nom from Produit1 where Produit1.nom_categorie = " + catSelectionne);
-    	//ArrayList<String> selectionCategorie = requete2.getSelection();
-
-    	nomBox = new JComboBox();
-    	//for (String elt : selectionCategorie) {
-    	//	nomBox.addItem(elt);
-    	//}
-
-    	nomBox.addItem("chaussettes"); // pour le test
-    	nomBox.addItem("pantoufles"); // pour le test
-    	nomBox.addItem("mocassins"); // pour le test
-    	nomBox.addItem("savates"); // pour le test
+    	for (String elt : lp) {
+    		produit.addItem(elt);
+    	}
     	nomLabel = new JLabel("Nom du produit");
-    	panNom.add(nomLabel);
-    	panNom.add(nomBox);
+    	panProduit.add(nomLabel);
+    	panProduit.add(produit);
 
     	//Le prix de revient
     	JPanel panPrix = new JPanel();
@@ -124,23 +133,30 @@ public class FenetreVendreProduit extends JDialog{
     	content.setBackground(Color.white);
     	content.add(panEmail);
     	content.add(panCategorie);
-    	content.add(panNom);
+    	content.add(panProduit);
     	content.add(panPrix);
     	content.add(panStock);
 
-
     	JPanel control = new JPanel();
-    	JButton okBouton = new JButton("OK");
+    	JButton okBouton = new JButton("Mettre ce produit en vente");
 
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
-    			confirmation = new ConfirmationVente(null, "Confirmation", true, email, (String) categorieBox.getSelectedItem(), (String) nomBox.getSelectedItem(),
-    					prixText.getText(), stockText.getText());
-    			info = new InfoProduitAVendre(email, (String) categorieBox.getSelectedItem(), (String) nomBox.getSelectedItem(),
-    					prixText.getText(), stockText.getText());
+    			String preStmt = "insert into Produit1(nom_categorie, email, nom, prix_revient, stock)"
+    					+ " values ('" + (String) categorieBox.getSelectedItem() 
+    			+ "', '" + emailText.getText() + "', '" + (String) produit.getSelectedItem() + "', '"
+    					+ prixText.getText() + "', '" + stockText.getText() + "')";
+    			Requete requete = new Requete(preStmt);
+    			requete.execute();
+			    String id = requete.recupIdProduit((String) categorieBox.getSelectedItem(), emailText.getText(), 
+			    		(String) produit.getSelectedItem());
+			    
+    			info = new InfoProduitAVendre(emailText.getText(), (String) categorieBox.getSelectedItem(), (String) produit.getSelectedItem(), 
+    					prixText.getText(), stockText.getText(), id);
     	        JOptionPane jop = new JOptionPane();
     	        jop.showMessageDialog(null, info.toString(), "Récapitulatif sur le produit à vendre", JOptionPane.INFORMATION_MESSAGE);
-    	        confirmation.afficher();
+    	        
+    	        setVisible(false);
     		}
     	});
 

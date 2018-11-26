@@ -69,15 +69,11 @@ public class FenetreDeConnexion extends JDialog {
     	JButton okBouton = new JButton("OK"); // bouton ok
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
-    			email = getEmail();
+    			email = emailText.getText();
     			ConfirmationCo co = new ConfirmationCo(email, estAdmin);
     	        JOptionPane.showMessageDialog(null, co.toString(), " ", JOptionPane.INFORMATION_MESSAGE);
     	        boolean continuer = co.continuer(email);
     	        setVisible(!continuer);
-    		}
-
-    		public String getEmail(){
-    			return (emailText.getText().equals("")) ? "" : emailText.getText();
     		}
     	});
 
