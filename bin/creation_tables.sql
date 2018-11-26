@@ -18,14 +18,14 @@ CREATE TABLE Utilisateur1
 
 CREATE TABLE Categorie1
 (
-  nom VARCHAR(50) PRIMARY KEY,
+  nom VARCHAR(50) PRIMARY KEY NOT NULL,
   description VARCHAR(200) NOT NULL
 );
 
 
 CREATE TABLE Produit1
 (
-  id_produit INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id_produit INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL,
   nom_categorie VARCHAR(50) REFERENCES Categorie1(nom),
   email VARCHAR(100) REFERENCES Utilisateur1(email),
   nom VARCHAR(50),
@@ -36,7 +36,7 @@ CREATE TABLE Produit1
 
 CREATE TABLE Salle1
 (
-  id_salle INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id_salle INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL,
   nom_categorie VARCHAR(50) REFERENCES Categorie1(nom),
   type_vente NUMBER(1, 0) DEFAULT 1, -- montante par DEFAULT
   est_libre NUMBER(1, 0) DEFAULT 1, -- libre par default (ie sans limite de temps)
@@ -47,7 +47,7 @@ CREATE TABLE Salle1
 
 CREATE TABLE Vente1
 (
-  id_vente INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id_vente INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL,
   id_produit INT REFERENCES Produit1(id_produit),
   id_salle INT REFERENCES Salle1(id_salle),
   prix_depart FLOAT CHECK(prix_depart >= 0),
@@ -57,7 +57,7 @@ CREATE TABLE Vente1
 
 CREATE TABLE Enchere1
 (
-  id_enchere INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id_enchere INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL,
   email VARCHAR(100) REFERENCES Utilisateur1(email),
   id_vente INT REFERENCES Vente1(id_vente),
   prix_propose FLOAT CHECK(prix_propose >= 0),
@@ -68,7 +68,7 @@ CREATE TABLE Enchere1
 
 CREATE TABLE Caracteristique1
 (
-  nom VARCHAR(50) PRIMARY KEY,
+  nom VARCHAR(50) PRIMARY KEY NOT NULL,
   id_produit INT REFERENCES Produit1(id_produit),
   valeur VARCHAR(50)
 );
