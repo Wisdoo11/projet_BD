@@ -43,9 +43,9 @@ public class Application {
 		
 
 	    //quelques requetes de tests
-	    //String preStmt = "delete from Produit1 where email='toto@toto.fr'";
-	    //Requete requete = new Requete(preStmt);
-	    //requete.executeUpdateReq();
+	    String preStmt = "select * from Produit1";
+	    Requete requete = new Requete(preStmt);
+	    requete.execute();
 	    
 	    // requete non valide car violation de la contrainte d'intégrité : clé primaire
 	    //String preStmt1 = "insert into Utilisateur1 values ('toto3@toto3.fr', 'toto3', 'toto3', '2 avenue toto3')";
@@ -55,9 +55,9 @@ public class Application {
 	    //} catch (SQLIntegrityConstraintViolationException e) { // recuperation de l'erreur
 	    //}
 	    
-	    String preStmt2 = "select * from produit1";
-	    Requete requete2 = new Requete(preStmt2);
-	    requete2.execute();
+	    //String preStmt2 = "select * from Utilisateur1";
+	    //Requete requete2 = new Requete(preStmt2);
+	    //requete2.execute();
 		
 	    // ouverture de l'application
 		FenetreAccueil fenetre = new FenetreAccueil();

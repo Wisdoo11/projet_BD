@@ -26,14 +26,12 @@ public class FenetreChoixNbrProduits extends JDialog {
 	private JLabel produit;
 	private JTextField produitText;
 	private String categorie;
-	private JLabel emailLabel;
-	private JTextField emailText;
 
 	public FenetreChoixNbrProduits(JFrame parent, String title, boolean modal, String email, boolean estAdmin, String categorie){
 		super(parent, title, modal);
 		this.email = email;
 		this.estAdmin = estAdmin;
-		this.setSize(300, 300);
+		this.setSize(300, 200);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -56,13 +54,6 @@ public class FenetreChoixNbrProduits extends JDialog {
 		JLabel label = new JLabel(labelText);
 		panel.add(label);
 		setContentPane(panel);
-		
-		//email
-		//JPanel panEmail = new JPanel();	
-		//panEmail.setBackground(Color.white);
-		//panEmail.setPreferredSize(new Dimension(90, 50));
-		//emailLabel = new JLabel("votre email :");
-		emailText = new JTextField(email);
 	
 		// Nombre de produits
 		JPanel panProduit = new JPanel();	
@@ -74,23 +65,21 @@ public class FenetreChoixNbrProduits extends JDialog {
 		panProduit.add(produit);
 		panProduit.add(produitText);
 		
-    	JPanel content = new JPanel();
-    	content.setBackground(Color.white);
-    	//content.add(panEmail);
-    	content.add(panProduit);
-		
     	JPanel control = new JPanel();
     	JButton okBouton = new JButton("OK");
 
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
-    			if (estAdmin) {
-    				FenetreAjoutProduits fenetreAjoutPro = new FenetreAjoutProduits(null, "Ajoutez les produits", true, emailText.getText(), true, produitText.getText());
-    				fenetreAjoutPro.afficher();
-    			} else {
-    				// TODO à compléter
-    			}
-    			setVisible(false);
+//    			if (estAdmin) {
+//    				SalleDialog salle = new SalleDialog(null, "Ajouter une nouvelle salle", true, (String) produitText.getSelectedItem());
+//    				ZDialogInfo zInfo = salle.showZDialog();
+//    				JOptionPane jop = new JOptionPane();
+//    				jop.showMessageDialog(null, zInfo.toString(), "Informations Salle de Ventes", JOptionPane.INFORMATION_MESSAGE);
+//    			} else {
+//    	 			FenetreVendreProduit fenetreVendre = new FenetreVendreProduit(null,"Vous souhaitez vendre un produit", true, email, (String) produitText.getSelectedItem());
+//    	 			fenetreVendre.afficher();
+//    	 			setVisible(false);
+//    			}
     		}
     	});
 

@@ -24,8 +24,6 @@ public class ChoixCatProduit extends JDialog {
 	private JComboBox Categorie;
 	private String email;
 	private boolean estAdmin;
-	private JLabel emailLabel;
-	private JTextField emailText;
 
 	public ChoixCatProduit(JFrame parent, String title, boolean modal, String email, boolean estAdmin){
 		super(parent, title, modal);
@@ -53,9 +51,6 @@ public class ChoixCatProduit extends JDialog {
 		JLabel label = new JLabel(labelText);
 		panel.add(label);
 		setContentPane(panel);
-		
-		//email
-		emailText = new JTextField(email);
 	
 		//La catégorie de la salle
 		JPanel panCategorie = new JPanel();
@@ -85,9 +80,10 @@ public class ChoixCatProduit extends JDialog {
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
     			if (estAdmin) {
-    				FenetreChoixNbrProduits fenetreNbProduits = new FenetreChoixNbrProduits(null, "Nombre de produits", true, emailText.getText(), true, (String) Categorie.getSelectedItem());
-    				fenetreNbProduits.afficher();
-    				setVisible(false);
+    				SalleDialog salle = new SalleDialog(null, "Ajouter une nouvelle salle", true, (String) Categorie.getSelectedItem());
+    				ZDialogInfo zInfo = salle.showZDialog();
+    				JOptionPane jop = new JOptionPane();
+    				jop.showMessageDialog(null, zInfo.toString(), "Informations Salle de Ventes", JOptionPane.INFORMATION_MESSAGE);
     			} else {
     	 			FenetreVendreProduit fenetreVendre = new FenetreVendreProduit(null,"Vous souhaitez vendre un produit", true, email, (String) Categorie.getSelectedItem());
     	 			fenetreVendre.afficher();

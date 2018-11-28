@@ -128,7 +128,7 @@ public class FenetreNouvelUtilisateur extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				String preStmt = "insert into Utilisateur1 values ('" + email.getText() + "', '" + nom.getText() + "', '" +
 						prenom.getText() + "', '" + adresse.getText() + "')";
-				System.out.println(preStmt);
+				//System.out.println(preStmt);
 				Requete requete = new Requete(preStmt);
 			    requete.execute();
 			    

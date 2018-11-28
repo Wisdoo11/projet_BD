@@ -63,7 +63,7 @@ public class Requete {
 
 	        } catch (SQLException e) {
 	            System.err.println("Modification non possible !");
-	            e.printStackTrace(System.err);
+	            //e.printStackTrace(System.err);
 	        }
 	}
 	
