@@ -93,7 +93,7 @@ public class FenetreChoixNbrProduits extends JDialog {
     	control.add(okBouton);
     	control.add(cancelBouton);
 
-    	this.getContentPane().add(content, BorderLayout.CENTER);
+    	this.getContentPane().add(control, BorderLayout.CENTER);
     	this.getContentPane().add(control, BorderLayout.SOUTH);
 	}
 	
