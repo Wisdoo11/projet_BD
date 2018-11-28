@@ -25,7 +25,7 @@ public class FenetreAjoutProduits extends JDialog {
 		super(parent, title, modal);
 		this.email = email;
 		this.estAdmin = estAdmin;
-		this.setSize(300, 200);
+		this.setSize(650, 650);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -49,9 +49,7 @@ public class FenetreAjoutProduits extends JDialog {
 		panel.add(label);
 		setContentPane(panel);
 		
-		ArrayList<String[]> listeProduits = new ArrayList<String[]>();
-		
-		
+		ArrayList<String[]> listeProduits = new ArrayList<String[]>();		
 		
 		JPanel content = new JPanel();
     	content.setBackground(Color.white);
