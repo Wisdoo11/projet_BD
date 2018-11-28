@@ -43,7 +43,7 @@ public class Application {
 		
 
 	    //quelques requetes de tests
-	    String preStmt = "select * from Produit1";
+	    String preStmt = "delete from Utilisateur1 where nom='toto'";
 	    Requete requete = new Requete(preStmt);
 	    requete.execute();
 	    
@@ -55,9 +55,9 @@ public class Application {
 	    //} catch (SQLIntegrityConstraintViolationException e) { // recuperation de l'erreur
 	    //}
 	    
-	    //String preStmt2 = "select * from Utilisateur1";
-	    //Requete requete2 = new Requete(preStmt2);
-	    //requete2.execute();
+	    String preStmt2 = "select * from Utilisateur1";
+	    Requete requete2 = new Requete(preStmt2);
+	    requete2.execute();
 		
 	    // ouverture de l'application
 		FenetreAccueil fenetre = new FenetreAccueil();
