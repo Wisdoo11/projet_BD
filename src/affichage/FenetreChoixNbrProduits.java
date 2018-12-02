@@ -23,8 +23,7 @@ public class FenetreChoixNbrProduits extends JDialog {
 	private JLabel produit;
 	private JTextField produitText;
 	private String categorie;
-	private JLabel emailLabel;
-	private JTextField emailText, categorieText, idSalleText, typeText;
+	private JTextField categorieText, idSalleText;
 	private String idSalle;
 	private int typeDuree;
 
@@ -58,17 +57,11 @@ public class FenetreChoixNbrProduits extends JDialog {
 		panel.add(label);
 		setContentPane(panel);
 		
-		//email
-		emailText = new JTextField(email);
-		
 		//categorie
 		categorieText = new JTextField(categorie);
 		
 		//salle
-		idSalleText = new JTextField(idSalle);
-		
-		//type de durée
-		typeText = new JTextField(typeDuree);
+		//idSalleText = new JTextField(idSalle);
 	
 		// Nombre de produits
 		JPanel panProduit = new JPanel();	
@@ -92,21 +85,9 @@ public class FenetreChoixNbrProduits extends JDialog {
 
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
-    			if (estAdmin) {
-    				System.out.println("Voici les produits de la catégorie : " + (String) categorieText.getText());
-        			String preStmt = "select * from Produit1 where nom_categorie='" + (String) categorieText.getText() + "'";
-        			Requete requete = new Requete(preStmt);
-        			requete.execute();
-        			
-    				System.out.println(typeDuree);
-    				
-    				FenetreAjoutProduits fenetreAjoutPro = new FenetreAjoutProduits(null, "Ajoutez les produits", true, 
-    						categorieText.getText(), true, produitText.getText(), idSalleText.getText(), typeDuree);
+    			FenetreAjoutProduits fenetreAjoutPro = new FenetreAjoutProduits(null, "Ajoutez les produits", true, 
+    					categorieText.getText(), true, produitText.getText(), idSalle, typeDuree);
     				fenetreAjoutPro.afficher();
-    				
-    			} else {
-    			// TODO A completer
-    			}
     			setVisible(false);
     		}
     	});

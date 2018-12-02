@@ -43,7 +43,7 @@ public class Application {
 		
 
 	    //quelques requetes de tests
-	    String preStmt = "delete from Salle1 where id_salle=32";
+	    String preStmt = "delete from Salle1 where id_salle=33";
 	    Requete requete = new Requete(preStmt);
 	    requete.executeUpdateReq();
 	    
@@ -55,7 +55,7 @@ public class Application {
 	    //} catch (SQLIntegrityConstraintViolationException e) { // recuperation de l'erreur
 	    //}
 	    
-	    String preStmt2 = "select * from Salle1";
+	    String preStmt2 = "select * from Produit1";
 	    Requete requete2 = new Requete(preStmt2);
 	    requete2.execute();
 		

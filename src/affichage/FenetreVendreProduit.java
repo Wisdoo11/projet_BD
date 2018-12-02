@@ -141,19 +141,24 @@ public class FenetreVendreProduit extends JDialog{
 
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
+    			//on ajoute le nouveau produit dans la base de données
     			String preStmt = "insert into Produit1(nom_categorie, email, nom, prix_revient, stock)"
     					+ " values ('" + (String) categorieBox.getSelectedItem() 
-    			+ "', '" + emailText.getText() + "', '" + (String) produit.getSelectedItem() + "', '"
-    					+ Float.parseFloat(prixText.getText()) + "', '" + Float.parseFloat(stockText.getText())+ "')";
+    			+ "', '" + emailText.getText() + "', '" + (String) produit.getSelectedItem() + "', "
+    					+ prixText.getText() + ", " + stockText.getText() + ")";
     			Requete requete = new Requete(preStmt);
-    			requete.execute();
+    			requete.executeUpdateReq();;
+    			
+    			//on récupère l'identifiant du nouveau produit 
 			    String id = requete.recupIdProduit((String) categorieBox.getSelectedItem(), emailText.getText(), 
 			    		(String) produit.getSelectedItem());
 			    
+			    //on affiche les informations sur le nouveau produit
     			info = new InfoProduitAVendre(emailText.getText(), (String) categorieBox.getSelectedItem(), (String) produit.getSelectedItem(), 
     					prixText.getText(), stockText.getText(), id);
     	        JOptionPane.showMessageDialog(null, info.toString(), "Récapitulatif sur le produit à vendre", JOptionPane.INFORMATION_MESSAGE);
     	        
+    	        //on ferme la fenêtre à la fin de la manipulation
     	        setVisible(false);
     		}
     	});

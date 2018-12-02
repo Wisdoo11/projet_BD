@@ -172,6 +172,12 @@ public class FenetreTypeSalle extends JDialog {
     			infoSalle = new InfoSalle(id, categorieText.getText(), type1, libre1, revocable1, enchere1);
     	        JOptionPane.showMessageDialog(null, infoSalle.toString(), "Récapitulatif sur la salle de vente", JOptionPane.INFORMATION_MESSAGE);
     	        
+    	        //affiche tout les produits de la catégorie catégorie
+				System.out.println("Voici les produits de la catégorie : " + categorie);
+    			String preStmt1 = "select * from Produit1 where nom_categorie='" + categorie + "'";
+    			Requete requete1 = new Requete(preStmt1);
+    			requete1.execute();
+    	        
     	        FenetreChoixNbrProduits fenetre = new FenetreChoixNbrProduits(null, "Nombre de produits à vendre dans la salle", true,
     	        		"Admin", true, (String) categorieText.getText(), id, libre1);
     	        fenetre.afficher();
