@@ -55,6 +55,7 @@ public class SalleDialog extends JDialog {
 		panIcon.setLayout(new BorderLayout());
 		panIcon.add(icon);
 
+		/*
 		//Le nom de la salle de vente
 		JPanel panNom = new JPanel();
 		panNom.setBackground(Color.white);
@@ -106,6 +107,7 @@ public class SalleDialog extends JDialog {
     	panVente.add(venteLabel);
     	panVente.add(vente);
     	panVente.add(vente2Label);
+    	*/
 
     	//Le type de la salle
     	JPanel panType = new JPanel();
@@ -119,7 +121,7 @@ public class SalleDialog extends JDialog {
     	panType.add(typeLabel);
     	panType.add(type);
     	
-    	
+    	/*
     	//Le nom du produit
     	JPanel panProduit = new JPanel();
     	panProduit.setBackground(Color.white);
@@ -156,15 +158,16 @@ public class SalleDialog extends JDialog {
     	panPrix.add(prixLabel);
     	panPrix.add(prix);
     	panPrix.add(prix2Label);
+    	*/
 
     	JPanel content = new JPanel();
     	content.setBackground(Color.white);
-    	content.add(panNom);
-    	content.add(panCategorie);
-    	content.add(panProduit);
-    	content.add(panVente);
+    	//content.add(panNom);
+    	//content.add(panCategorie);
+    	//content.add(panProduit);
+    	//content.add(panVente);
     	content.add(panType);
-    	content.add(panPrix);
+    	//content.add(panPrix);
 
 
     	JPanel control = new JPanel();

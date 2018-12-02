@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -24,8 +23,8 @@ public class FenetreVendreProduit extends JDialog{
 	
 	private String email;
 	private JLabel emailLabel, nomLabel, prixLabel, CategorieLabel, prix2Label;
-	private JComboBox categorieBox, nomBox, produit;
-	private JTextField prixText, stockText, emailText, catText;
+	private JComboBox<String> categorieBox, produit;
+	private JTextField prixText, stockText, emailText;
 	private String catSelectionne;
 	private InfoProduitAVendre info;
 
@@ -65,7 +64,7 @@ public class FenetreVendreProduit extends JDialog{
 		ArrayList<String[]> selection = new ArrayList<String[]>();
 		requete.getSelection(selection);
 
-    	categorieBox = new JComboBox();
+    	categorieBox = new JComboBox<String>();
     	int item = 1;
     	int pos = 2;
     	System.out.println(catSelectionne);
@@ -87,7 +86,7 @@ public class FenetreVendreProduit extends JDialog{
     	panProduit.setBackground(Color.white);
     	panProduit.setPreferredSize(new Dimension(250, 80));
     	panProduit.setBorder(BorderFactory.createTitledBorder("Le(s) produit(s)"));
-    	produit = new JComboBox();
+    	produit = new JComboBox<String>();
     	
     	String catSelectionne = (String) categorieBox.getSelectedItem();
     	Requete requete2 = new Requete("select Produit1.nom from Produit1 where Produit1.nom_categorie = " + catSelectionne);
@@ -145,7 +144,7 @@ public class FenetreVendreProduit extends JDialog{
     			String preStmt = "insert into Produit1(nom_categorie, email, nom, prix_revient, stock)"
     					+ " values ('" + (String) categorieBox.getSelectedItem() 
     			+ "', '" + emailText.getText() + "', '" + (String) produit.getSelectedItem() + "', '"
-    					+ prixText.getText() + "', '" + stockText.getText() + "')";
+    					+ Float.parseFloat(prixText.getText()) + "', '" + Float.parseFloat(stockText.getText())+ "')";
     			Requete requete = new Requete(preStmt);
     			requete.execute();
 			    String id = requete.recupIdProduit((String) categorieBox.getSelectedItem(), emailText.getText(), 
@@ -153,8 +152,7 @@ public class FenetreVendreProduit extends JDialog{
 			    
     			info = new InfoProduitAVendre(emailText.getText(), (String) categorieBox.getSelectedItem(), (String) produit.getSelectedItem(), 
     					prixText.getText(), stockText.getText(), id);
-    	        JOptionPane jop = new JOptionPane();
-    	        jop.showMessageDialog(null, info.toString(), "Récapitulatif sur le produit à vendre", JOptionPane.INFORMATION_MESSAGE);
+    	        JOptionPane.showMessageDialog(null, info.toString(), "Récapitulatif sur le produit à vendre", JOptionPane.INFORMATION_MESSAGE);
     	        
     	        setVisible(false);
     		}

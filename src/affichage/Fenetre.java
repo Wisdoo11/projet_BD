@@ -39,11 +39,8 @@ public class Fenetre extends JFrame {
  	label.setLayout(new BoxLayout(label, BoxLayout.LINE_AXIS));
  	panel.add(label);
  	setContentPane(panel);
- 	
-    //this.getContentPane().add(bouton1);
-    //this.getContentPane().add(bouton2);
-    //this.getContentPane().add(bouton3);
     
+ 	//organisation des boutons sur la fenêtre
     Box b1 = Box.createHorizontalBox();
     b1.add(bouton1);
     
@@ -69,8 +66,8 @@ public class Fenetre extends JFrame {
  	
  	this.getContentPane().add(box);
     
+ 	//mise en place des salles de vente
     bouton1.addActionListener(new ActionListener(){
-    	
       public void actionPerformed(ActionEvent arg0) {
     	  ChoixCatProduit choix = new ChoixCatProduit(null, "Catégorie des produits à vendre", true, "admin", true);
     	  choix.afficher();
@@ -78,6 +75,7 @@ public class Fenetre extends JFrame {
     }
     );
     
+    //ajouter une catégorie de produits
     bouton5.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent arg0) {
       	  AjouterCategorie choix = new AjouterCategorie(null, "Catégorie des produits à vendre", true);

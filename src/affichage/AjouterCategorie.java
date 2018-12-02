@@ -96,14 +96,11 @@ public class AjouterCategorie extends JDialog {
 	    box2.add(panDescription);
 	    box2.add(Box.createRigidArea(new Dimension(0,5)));
 	    
-	    Box box00 = Box.createVerticalBox();
-	    box00.add(Box.createRigidArea(new Dimension(0,5)));
 	    
 	    Box box = Box.createVerticalBox();
 	    box.add(box0);
 	    box.add(box1);
 	    box.add(box2);
-	    box.add(box00);
 	   	
 	    this.getContentPane().add(box);
 	   	this.getContentPane().add(control, BorderLayout.SOUTH);

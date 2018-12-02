@@ -7,13 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -21,10 +19,9 @@ import projet_BD.Requete;
 
 public class ChoixCatProduit extends JDialog {
 
-	private JComboBox Categorie;
+	private JComboBox<String> Categorie;
 	private String email;
 	private boolean estAdmin;
-	private JLabel emailLabel;
 	private JTextField emailText;
 
 	public ChoixCatProduit(JFrame parent, String title, boolean modal, String email, boolean estAdmin){
@@ -66,7 +63,7 @@ public class ChoixCatProduit extends JDialog {
 		ArrayList<String[]> selection = new ArrayList<String[]>();
 		requete.getSelection(selection);
 	
-		Categorie = new JComboBox();
+		Categorie = new JComboBox<String>();
 		for (String[] elt : selection) {
 			for (String i:elt) {
 				Categorie.addItem(i);
@@ -85,8 +82,8 @@ public class ChoixCatProduit extends JDialog {
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
     			if (estAdmin) {
-    				FenetreChoixNbrProduits fenetreNbProduits = new FenetreChoixNbrProduits(null, "Nombre de produits", true, emailText.getText(), true, (String) Categorie.getSelectedItem());
-    				fenetreNbProduits.afficher();
+    				FenetreTypeSalle fenetreSalle = new FenetreTypeSalle(null, "Type de Salle de vente", true, (String) Categorie.getSelectedItem());
+    				fenetreSalle.afficher();
     				setVisible(false);
     			} else {
     	 			FenetreVendreProduit fenetreVendre = new FenetreVendreProduit(null,"Vous souhaitez vendre un produit", true, email, (String) Categorie.getSelectedItem());

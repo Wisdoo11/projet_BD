@@ -7,13 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -27,12 +24,16 @@ public class FenetreChoixNbrProduits extends JDialog {
 	private JTextField produitText;
 	private String categorie;
 	private JLabel emailLabel;
-	private JTextField emailText;
+	private JTextField emailText, categorieText, idSalleText, typeText;
+	private String idSalle;
+	private int typeDuree;
 
-	public FenetreChoixNbrProduits(JFrame parent, String title, boolean modal, String email, boolean estAdmin, String categorie){
+	public FenetreChoixNbrProduits(JFrame parent, String title, boolean modal, String email, boolean estAdmin, String categorie, String idSalle, int typeDuree){
 		super(parent, title, modal);
 		this.email = email;
 		this.estAdmin = estAdmin;
+		this.idSalle = idSalle;
+		this.typeDuree = typeDuree;
 		this.setSize(300, 300);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -59,6 +60,15 @@ public class FenetreChoixNbrProduits extends JDialog {
 		
 		//email
 		emailText = new JTextField(email);
+		
+		//categorie
+		categorieText = new JTextField(categorie);
+		
+		//salle
+		idSalleText = new JTextField(idSalle);
+		
+		//type de durée
+		typeText = new JTextField(typeDuree);
 	
 		// Nombre de produits
 		JPanel panProduit = new JPanel();	
@@ -72,7 +82,9 @@ public class FenetreChoixNbrProduits extends JDialog {
 		
 		JPanel content = new JPanel();
 		content.setBackground(Color.white);
+		
 		//content.add(panEmail);
+		content.add(panProduit);
 		content.add(panProduit);
 		
     	JPanel control = new JPanel();
@@ -81,8 +93,17 @@ public class FenetreChoixNbrProduits extends JDialog {
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
     			if (estAdmin) {
-    				FenetreAjoutProduits fenetreAjoutPro = new FenetreAjoutProduits(null, "Ajoutez les produits", true, emailText.getText(), true, produitText.getText());
+    				System.out.println("Voici les produits de la catégorie : " + (String) categorieText.getText());
+        			String preStmt = "select * from Produit1 where nom_categorie='" + (String) categorieText.getText() + "'";
+        			Requete requete = new Requete(preStmt);
+        			requete.execute();
+        			
+    				System.out.println(typeDuree);
+    				
+    				FenetreAjoutProduits fenetreAjoutPro = new FenetreAjoutProduits(null, "Ajoutez les produits", true, 
+    						categorieText.getText(), true, produitText.getText(), idSalleText.getText(), typeDuree);
     				fenetreAjoutPro.afficher();
+    				
     			} else {
     			// TODO A completer
     			}
@@ -100,7 +121,7 @@ public class FenetreChoixNbrProduits extends JDialog {
     	control.add(okBouton);
     	control.add(cancelBouton);
 
-    	this.getContentPane().add(control, BorderLayout.CENTER);
+    	this.getContentPane().add(content, BorderLayout.CENTER);
     	this.getContentPane().add(control, BorderLayout.SOUTH);
 	}
 	

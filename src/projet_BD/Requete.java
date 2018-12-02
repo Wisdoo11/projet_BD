@@ -1,7 +1,6 @@
 package projet_BD;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Requete {
 	
@@ -42,7 +41,7 @@ public class Requete {
         }
     }
     
-	public void executeUpdateReq() throws SQLException {
+	public void executeUpdateReq() {
 		
 		try {
 	  	    // Enregistrement du driver Oracle
@@ -63,7 +62,7 @@ public class Requete {
 
 	        } catch (SQLException e) {
 	            System.err.println("Modification non possible !");
-	            //e.printStackTrace(System.err);
+	            e.printStackTrace(System.err);
 	        }
 	}
 	
@@ -103,6 +102,48 @@ public class Requete {
         return id;
     }
 	
+	public String recupIdSalle(String categorie, int vente, int libre, int revocable, int enchere) {
+		String id = "";
+        try {
+  	    // Enregistrement du driver Oracle
+  	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+  	    // Etablissement de la connection
+  	    Connection conn = DriverManager.getConnection(Requete.CONN_URL, Requete.USER, Requete.PASSWD);
+
+  	    // Creation de la requete
+  	    
+        PreparedStatement stmt = conn.prepareStatement("select max(id_salle) from Salle1 where "
+        		+ "nom_categorie='" + categorie + "' and type_vente=" + vente + " and est_libre=" + libre + 
+        		" and est_revocable=" + revocable + " and enchere_multiple=" + enchere); // TODO il faut se déplacer en serializable !
+  	    // Execution de la requete
+        ResultSet rset = stmt.executeQuery();
+        
+        ResultSetMetaData rsetmd = rset.getMetaData();
+        int i = rsetmd.getColumnCount();
+        rset.next();
+        System.out.println( i);
+        id = rset.getString(1);
+        System.out.println("Le numéro de la salle est : " + id);
+
+  	    // Fermeture
+  	    rset.close();
+        stmt.close();
+        conn.close();
+
+        } catch (SQLException e) {
+            System.err.println("failed !");
+            e.printStackTrace(System.err);
+        }
+        
+        return id;
+    }
+	
+	/**
+	 * Cette méthode affiche les réponses d'une reqête SQL
+	 * @param rset le résultat de la requête
+	 * @throws SQLException
+	 */
     private void dumpResultSet(ResultSet rset) throws SQLException {
         ResultSetMetaData rsetmd = rset.getMetaData();
         int i = rsetmd.getColumnCount();
@@ -114,6 +155,10 @@ public class Requete {
         }
     }
     
+    /**
+     * Cette méthode permet de récupérer les réponses d'une requête SQL sous la forme d'une ArrayList
+     * @param selection prend en argument une ArrayList vide
+     */
     public void getSelection(ArrayList<String[]> selection) {
     	
     	try {
@@ -147,7 +192,7 @@ public class Requete {
             conn.close();
             
     	} catch (SQLException e) {
-            System.err.println("failed !");
+            System.err.println("Nous ne parvenons pas à récupérer les réponses de la requête !");
             //e.printStackTrace(System.err);
         }	
     }

@@ -4,15 +4,15 @@ import javax.swing.JDialog;
 
 public class InfoProduitAVendre {
 	
-	private String email, nom, categorie, prix, stock, idProduit;
+	private String email, categorie, nom, prix, stock, idProduit;
 	
-	public InfoProduitAVendre(String email, String categorie, String nom, String prix, String stock, String idProduit){
+	public InfoProduitAVendre(String email, String categorie, String nom, String prix, String stock, String id){
 		this.email = email;
-		this.nom = nom;
 		this.categorie = categorie;
+		this.nom = nom;
 		this.prix = prix;
 		this.stock = stock;
-		this.idProduit = idProduit;
+		this.idProduit = id;
 	}
 
 	public String toString(){
