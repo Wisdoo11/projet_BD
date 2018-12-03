@@ -107,12 +107,6 @@ public class FenetreTypeSalle extends JDialog {
 		JPanel content = new JPanel();
 		content.setBackground(Color.white);
 		
-		//content.add(panEmail);
-		//content.add(panType);
-		//content.add(panLibre);
-		//content.add(panRevocable);
-		//content.add(panEnchMult);
-		
 	    Box box0 = Box.createVerticalBox();
 	    box0.add(Box.createRigidArea(new Dimension(0,5)));
 	    
@@ -174,13 +168,21 @@ public class FenetreTypeSalle extends JDialog {
     	        
     	        //affiche la requête
     	        System.out.println("insert into Salle1(id_salle, nom_categorie, type_vente, est_libre, est_revocable, enchere_multiple)"
-    					+ " values (" + id + "'" + categorieText.getText() + "', '" + type1 + "', '" + libre1 + "', '"
-    					+ revocable1 + "', '" + enchere1 + "')");
+    					+ " values (" + id + ", '" + categorieText.getText() + "', " + type1 + ", " + libre1 + ", "
+    					+ revocable1 + ", " + enchere1 + ")");
     	        
     	        //affiche tout les produits de la catégorie catégorie
 				System.out.println("Voici les produits de la catégorie : " + categorie);
-    			String preStmt1 = "select * from Produit1 where nom_categorie='" + categorie + "'";
-    			Requete requete1 = new Requete(preStmt1);
+				System.out.println("id_produit \t nom \t prix de revient");
+				Requete requete1 = new Requete("Select Produit1.id_produit, Produit1.nom, Produit1.prix_revient\r\n" + 
+						"From Produit1\r\n" + 
+						"MINUS\r\n" + 
+						"Select Produit1.id_produit, Produit1.nom, Produit1.prix_revient\r\n" +
+						"From Salle1, Vente1, Produit1\r\n" + 
+						"Where Salle1.nom_categorie = '" + categorie + "'\r\n" + 
+						"AND Produit1.nom_categorie = '" + categorie + "'\r\n" + 
+						"AND Vente1.id_salle = Salle1.id_salle\r\n" + 
+						"AND Vente1.id_produit = Produit1.id_produit"); //TODO à compléter : il faut afficher les produits qui ne sont pas encore mis à la vente
     			requete1.execute();
     	        
     	        FenetreChoixNbrProduits fenetre = new FenetreChoixNbrProduits(null, "Nombre de produits à vendre dans la salle", true,
@@ -202,7 +204,6 @@ public class FenetreTypeSalle extends JDialog {
     	control.add(cancelBouton);
 
     	this.getContentPane().add(box);
-    	//this.getContentPane().add(new JScrollPane(), BorderLayout.EAST);
     	this.getContentPane().add(control, BorderLayout.SOUTH);
 	}
 	

@@ -74,13 +74,21 @@ public class FenetreAjoutProduits extends JDialog {
 			panProduit.setPreferredSize(new Dimension(200, 80));
 			JLabel produit = new JLabel("Nom du produit : ");
 			
-			Requete requete = new Requete("select id_produit, nom from Produit1 where nom_categorie='" + categorie + "'");
+			Requete requete = new Requete("Select Produit1.id_produit, Produit1.nom\r\n" + 
+					"From Produit1\r\n" + 
+					"MINUS\r\n" + 
+					"Select Produit1.id_produit, Produit1.nom\r\n" + 
+					"From Salle1, Vente1, Produit1\r\n" + 
+					"Where Salle1.nom_categorie = '" + categorie + "'\r\n" + 
+					"AND Produit1.nom_categorie = '" + categorie + "'\r\n" + 
+					"AND Vente1.id_salle = Salle1.id_salle\r\n" + 
+					"AND Vente1.id_produit = Produit1.id_produit"); //TODO à compléter : il faut afficher les produits qui ne sont pas encore mis à la vente
 			ArrayList<String[]> selection = new ArrayList<String[]>();
 			requete.getSelection(selection);
 		
 			produitBox = new JComboBox<String>();
 			for (String[] elt : selection) {
-				produitBox.addItem(elt[0] + ", " + elt[1]);
+				produitBox.addItem(elt[0] + " - " + elt[1]);
 			}
 			panProduit.add(produit);
 			panProduit.add(produitBox);
@@ -134,7 +142,7 @@ public class FenetreAjoutProduits extends JDialog {
 
     			while (itProd.hasNext() ) {
     				
-    				elt1 = Integer.parseInt(((String) itProd.next().getSelectedItem()).split(", ")[0]); //on récupère l'id_produit du produit
+    				elt1 = Integer.parseInt(((String) itProd.next().getSelectedItem()).split(" - ")[0]); //on récupère l'id_produit du produit
     				elt2 = Integer.parseInt(itPrix.next().getText()); //on récupère son prix de départ
 					preStmt1 = "select id_produit from Vente1 where id_produit=" + elt1;
 					requete1 = new Requete(preStmt1);
@@ -149,11 +157,12 @@ public class FenetreAjoutProduits extends JDialog {
 								+ elt1 + ", " + salle +	"," + elt2 + ", " + "CURRENT_TIMESTAMP" + ")"; //TODO récupérer le temps suivant le type de vente
 						Requete requete = new Requete(preStmt);
 						requete.executeUpdateReq();
+						
+						System.out.println(preStmt);
 					}
 
     			}
-
-    			
+    			setVisible(false);    			
     		}
     	});
 

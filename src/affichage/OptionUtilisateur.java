@@ -84,9 +84,9 @@ public class OptionUtilisateur extends JDialog {
 	 	//je veux participer à une enchère
 	 	bouton2.addActionListener(new ActionListener(){
 	 		public void actionPerformed(ActionEvent arg0) {		   
-	 			FenetreRealiserEnchere fenetreEnchere = new FenetreRealiserEnchere(null,"Vous souhaitez acheter un produit", true, email);
+	 			ChoixCatProduitEnchere fenetreEnchere = new ChoixCatProduitEnchere(null,"Vous souhaitez acheter un produit", true, email);
 	 			fenetreEnchere.afficher();
-	 			// TODO a completer    
+	 			// TODO a completer
 	 		}
 	 	}); 
 	 	

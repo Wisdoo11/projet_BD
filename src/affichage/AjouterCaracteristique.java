@@ -130,8 +130,6 @@ public class AjouterCaracteristique extends JDialog {
 					
 					setVisible(false);
     			}
-
-    			
     		}
     	});
 

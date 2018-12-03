@@ -15,13 +15,12 @@ public class ChoixCatProduitEnchere extends JDialog {
 
     private JComboBox<String> Categorie;
     private String email;
-    private boolean estAdmin;
-    private JTextField emailText;
+    private FenetreChoixProduitEnchere fenetreChoixProdEnchere;
 
     public ChoixCatProduitEnchere(JFrame parent, String title, boolean modal, String email){
         super(parent, title, modal);
         this.email = email;
-        this.setSize(300, 200);
+        this.setSize(400, 200);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -39,13 +38,10 @@ public class ChoixCatProduitEnchere extends JDialog {
         //panel.setLayout(new FlowLayout());
         String labelText = "<html><P ALIGN=CENTER STYLE=\"margin-bottom: 0in\"><BR>\r\n" +
                 "</P>\r\n" +
-                "<P ALIGN=CENTER STYLE=\"margin-bottom: 0in\"><FONT SIZE=5 STYLE=\"font-size: 12pt\"><B>Choissisez la catégorie du produit : </B></FONT></P></HTML>";
+                "<P ALIGN=CENTER STYLE=\"margin-bottom: 0in\"><FONT SIZE=5 STYLE=\"font-size: 12pt\"><B>Choissisez la catégorie du produit que vous voulez acheter : </B></FONT></P></HTML>";
         JLabel label = new JLabel(labelText);
         panel.add(label);
         setContentPane(panel);
-
-        //email
-        emailText = new JTextField(email);
 
         //La catégorie de la salle
         JPanel panCategorie = new JPanel();
@@ -74,9 +70,34 @@ public class ChoixCatProduitEnchere extends JDialog {
 
         okBouton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-            	FenetreVendreProduit fenetreVendre = new FenetreVendreProduit(null,"Vous souhaitez vendre un produit", true, email, (String) Categorie.getSelectedItem());
-                fenetreVendre.afficher();
-                setVisible(false);
+            	System.out.print("Voici les produits qui sont vendus: ");
+            	//affiche les produits à vendre avec leurs caractéritisques
+            	Requete requete = new Requete("Select Produit1.id_produit, Produit1.nom, Caracteristique1.nom, Caracteristique1.valeur\r\n" + 
+            			"From Salle1, Vente1, Produit1, Caracteristique1\r\n" + 
+            			"Where Salle1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" + 
+            			"AND Produit1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" + 
+            			"AND Vente1.id_salle = Salle1.id_salle\r\n" + 
+            			"AND Caracteristique1.id_produit = Produit1.id_produit\r\n" +
+            			"AND Vente1.id_produit = Produit1.id_produit\r\n" +
+            			"UNION\r\n" +
+            			"Select Produit1.id_produit, Produit1.nom, NULL, NULL\r\n" + 
+            			"From Salle1, Vente1, Produit1\r\n" + 
+            			"Where Salle1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" +
+            			"AND Produit1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" + 
+            			"AND Vente1.id_salle = Salle1.id_salle\r\n" + 
+            			"AND Vente1.id_produit = Produit1.id_produit\r\n" +
+            			"MINUS\r\n" +
+            			"Select Produit1.id_produit, Produit1.nom, NULL, NULL\r\n" + 
+            			"From Salle1, Vente1, Produit1, Caracteristique1\r\n" + 
+            			"Where Salle1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" + 
+            			"AND Produit1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" + 
+            			"AND Vente1.id_salle = Salle1.id_salle\r\n" +
+            			"AND Caracteristique1.id_produit = Produit1.id_produit\r\n" +
+            			"AND Vente1.id_produit = Produit1.id_produit"
+            			);
+            	requete.execute();
+            	fenetreChoixProdEnchere = new FenetreChoixProduitEnchere(null, "Choissisez le produit à acheter", true, (String) Categorie.getSelectedItem(), email);
+            	fenetreChoixProdEnchere.afficher();
             }
         });
 

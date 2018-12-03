@@ -12,7 +12,7 @@ CREATE TABLE Utilisateur1
   email VARCHAR(100) PRIMARY KEY NOT NULL,
   nom VARCHAR(50),
   prenom VARCHAR(50),
-  adresse_postale VARCHAR(100)
+  adresse_postale VARCHAR(250)
 );
 
 
@@ -68,7 +68,8 @@ CREATE TABLE Enchere1
 
 CREATE TABLE Caracteristique1
 (
-  nom VARCHAR(50) PRIMARY KEY NOT NULL,
+  nom VARCHAR(50) NOT NULL,
   id_produit INT REFERENCES Produit1(id_produit),
-  valeur VARCHAR(50)
+  valeur VARCHAR(250),
+  PRIMARY KEY(nom, id_produit)
 );
