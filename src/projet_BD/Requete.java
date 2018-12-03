@@ -14,6 +14,9 @@ public class Requete {
     	this.preStmt = preStmt;
     }
     
+    /**
+     * Cette méthode permet d'exécuter des requêtes de type SELECT uniquement
+     */
     public void execute() {
         try {
   	    // Enregistrement du driver Oracle
@@ -49,6 +52,10 @@ public class Requete {
 
 	  	    // Etablissement de la connection
 	  	    Connection conn = DriverManager.getConnection(Requete.CONN_URL, Requete.USER, Requete.PASSWD);
+	  	    
+	  	    // Demarrage de la transaction
+	  	    conn.setAutoCommit(false);
+	  	    conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
 
 	  	    // Creation de la requete
 	        PreparedStatement stmt = conn.prepareStatement(this.preStmt);
@@ -56,7 +63,9 @@ public class Requete {
 		    int rset = stmt.executeUpdate();
 		    System.out.println("Nombre d'élèments ajoutés : " + rset); // TODO à modifier
 
-	  	    // Fermeture
+	  	    // Terminaison de la transaction
+	  	    conn.commit();
+		    
 	        stmt.close();
 	        conn.close();
 
@@ -74,11 +83,14 @@ public class Requete {
 
   	    // Etablissement de la connection
   	    Connection conn = DriverManager.getConnection(Requete.CONN_URL, Requete.USER, Requete.PASSWD);
+  	    
+  	    // Demarrage de la transaction
+  	    conn.setAutoCommit(false);
+  	    conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
 
   	    // Creation de la requete
-  	    
         PreparedStatement stmt = conn.prepareStatement("select max(id_produit) from Produit1 where "
-        		+ "nom_categorie='" + categorie + "' and email='" + email + "' and nom='" + produit + "'"); // TODO il faut se déplacer en serializable !
+        		+ "nom_categorie='" + categorie + "' and email='" + email + "' and nom='" + produit + "'");
   	    // Execution de la requete
         ResultSet rset = stmt.executeQuery();
         
@@ -91,6 +103,10 @@ public class Requete {
 
   	    // Fermeture
   	    rset.close();
+  	    
+  	    // Terminaison de la transaction
+  	    conn.commit();
+  	    
         stmt.close();
         conn.close();
 
@@ -111,6 +127,10 @@ public class Requete {
   	    // Etablissement de la connection
   	    Connection conn = DriverManager.getConnection(Requete.CONN_URL, Requete.USER, Requete.PASSWD);
 
+  	    // Demarrage de la transaction
+  	    conn.setAutoCommit(false);
+  	    conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+  	    
   	    // Creation de la requete
   	    
         PreparedStatement stmt = conn.prepareStatement("select max(id_salle) from Salle1 where "
@@ -128,6 +148,10 @@ public class Requete {
 
   	    // Fermeture
   	    rset.close();
+  	    
+  	    // Terminaison de la transaction
+  	    conn.commit();
+  	    
         stmt.close();
         conn.close();
 

@@ -137,7 +137,7 @@ public class FenetreAjoutProduits extends JDialog {
     			while (itProd.hasNext() ) {
     				preStmt += preStmt + "insert into Vente1(id_produit, id_salle, prix_depart, temps) values('"
     						+ Integer.parseInt((String) itProd.next().getSelectedItem()) + "', " + Integer.parseInt(idSalleText.getText())  +
-    						"," + Integer.parseInt(itPrix.next().getText()) + "," + Integer.parseInt("") + ");" ; //TODO récupérer le temps suivant la type de vente	
+    						"," + Integer.parseInt(itPrix.next().getText()) + "," + Integer.parseInt("2") + ");" ; //TODO récupérer le temps suivant la type de vente	
     			}
     			Requete requete = new Requete(preStmt);
     			requete.executeUpdateReq();
