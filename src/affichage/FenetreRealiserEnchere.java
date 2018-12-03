@@ -84,10 +84,7 @@ public class FenetreRealiserEnchere extends JDialog {
     	//	nomBox.addItem(elt);
     	//}
 
-    	nomBox.addItem("chaussettes"); // pour le test
-    	nomBox.addItem("pantoufles"); // pour le test
-    	nomBox.addItem("mocassins"); // pour le test
-    	nomBox.addItem("savates"); // pour le test
+
     	nomLabel = new JLabel("Nom du produit");
     	panNom.add(nomLabel);
     	panNom.add(nomBox);

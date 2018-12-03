@@ -1,15 +1,18 @@
 insert into Utilisateur1 values ('seb@gmail.com', 'Herbreteau', 'Sebastien', '8 place Jean Moulin');
 insert into Utilisateur1 values ('alex@gmail.com', 'Donne', 'Alex', '9 place Jean Moulin');
+insert into Utilisateur1 values ('vilayvos@gmail.com', 'Vilayvong', 'Sophia', '6 Place Pasteur');
 select * from Utilisateur1;
 
 
 
 insert into Categorie1 values ('Vetements', 'Des vetements de toutes les sortes...');
 insert into Categorie1 values ('Jouets', 'Des jouets de toutes les sortes...');
+
 select * from Categorie1;
 
 
 insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Vetements', 'seb@gmail.com', 'Jeans', 50.2, 2);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Vetements', 'vilayvos@gmail.com', 'Jeans', 35, 5);
 select * from Produit1;
 
 insert into Salle1(nom_categorie) values ('Vetements');
@@ -17,7 +20,7 @@ insert into Salle1(nom_categorie) values ('Jouets');
 select * from Salle1;
 
 
-insert into Vente1(id_produit, id_salle, prix_depart, temps) values (1, 1, 5.1, CURRENT_TIMESTAMP);
+insert into Vente1(id_produit, id_salle, prix_depart, temps) values (1, 1, 5.1, '03-NOV-18 03.02.08 PM');
 select * from Vente1;
 
 

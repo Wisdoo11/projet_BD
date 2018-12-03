@@ -9,14 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.lang.String;
 
 import projet_BD.Requete;
 
@@ -80,15 +74,13 @@ public class FenetreAjoutProduits extends JDialog {
 			panProduit.setPreferredSize(new Dimension(200, 80));
 			JLabel produit = new JLabel("Nom du produit : ");
 			
-			Requete requete = new Requete("select id_produit from Produit1 where nom_categorie='" + categorie + "'");
+			Requete requete = new Requete("select id_produit, nom from Produit1 where nom_categorie='" + categorie + "'");
 			ArrayList<String[]> selection = new ArrayList<String[]>();
 			requete.getSelection(selection);
 		
 			produitBox = new JComboBox<String>();
 			for (String[] elt : selection) {
-				for (String j:elt) {
-					produitBox.addItem(j);
-				}
+				produitBox.addItem(elt[0] + ", " + elt[1]);
 			}
 			panProduit.add(produit);
 			panProduit.add(produitBox);
@@ -133,14 +125,34 @@ public class FenetreAjoutProduits extends JDialog {
     			
     			Iterator<JComboBox> itProd = listeProduits.iterator();
     			Iterator<JTextField> itPrix = listePrix.iterator();
-    			String preStmt = "";
+    			String preStmt;
+    			String preStmt1;
+    			Requete requete1;
+				ArrayList<String[]> selection;
+				int elt1, elt2;
+				int salle = Integer.parseInt( (String) idSalleText.getText());
+
+
     			while (itProd.hasNext() ) {
-    				preStmt += preStmt + "insert into Vente1(id_produit, id_salle, prix_depart, temps) values('"
-    						+ Integer.parseInt((String) itProd.next().getSelectedItem()) + "', " + Integer.parseInt(idSalleText.getText())  +
-    						"," + Integer.parseInt(itPrix.next().getText()) + "," + Integer.parseInt("2") + ");" ; //TODO récupérer le temps suivant la type de vente	
+    				elt1 = Integer.parseInt(((String) itProd.next().getSelectedItem()).split(", ")[0]);
+    				elt2 = Integer.parseInt(itPrix.next().getText());
+					preStmt1 = "select id_produit from Vente1 where id_produit=" +
+							elt1; //TODO récupérer le temps suivant le type de vente
+					requete1 = new Requete(preStmt1);
+					selection = new ArrayList<String[]>();
+					requete1.getSelection(selection);
+					if (!selection.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Vous ne pouvez pas ajouter plusieurs fois le même produit", " ", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+
+						preStmt = "insert into Vente1(id_produit, id_salle, prix_depart, temps) values("
+								+ elt1 + ", " + salle +	"," + elt2 + ", " + "CURRENT_TIMESTAMP" + ")"; //TODO récupérer le temps suivant le type de vente
+						Requete requete = new Requete(preStmt);
+						requete.executeUpdateReq();
+					}
+
     			}
-    			Requete requete = new Requete(preStmt);
-    			requete.executeUpdateReq();
+
     			
     		}
     	});
