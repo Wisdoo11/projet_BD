@@ -27,6 +27,7 @@ public class FenetreVendreProduit extends JDialog{
 	private JTextField prixText, stockText, emailText;
 	private String catSelectionne;
 	private InfoProduitAVendre info;
+	private NbCaracteristique fenetreAjoutCaract;
 
 	public FenetreVendreProduit(JFrame parent, String title, boolean modal, String email, String catSelectionne){
 		super(parent, title, modal);
@@ -158,8 +159,17 @@ public class FenetreVendreProduit extends JDialog{
     					prixText.getText(), stockText.getText(), id);
     	        JOptionPane.showMessageDialog(null, info.toString(), "Récapitulatif sur le produit à vendre", JOptionPane.INFORMATION_MESSAGE);
     	        
+    	        System.out.println("insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock)"
+    					+ " values (" + id + ", '" + (String) categorieBox.getSelectedItem() 
+    			+ "', '" + emailText.getText() + "', '" + (String) produit.getSelectedItem() + "', "
+    					+ prixText.getText() + ", " + stockText.getText() + ")");
+    	        
     	        //on ferme la fenêtre à la fin de la manipulation
     	        setVisible(false);
+    	        
+    	        fenetreAjoutCaract = new NbCaracteristique(null, "Choisissez le nombre de caractéristiques à ajouter", 
+    	        	true, email, id, (String) categorieBox.getSelectedItem());
+    	        fenetreAjoutCaract.afficher();
     		}
     	});
 

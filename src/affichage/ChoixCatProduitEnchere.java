@@ -18,10 +18,9 @@ public class ChoixCatProduitEnchere extends JDialog {
     private boolean estAdmin;
     private JTextField emailText;
 
-    public ChoixCatProduitEnchere(JFrame parent, String title, boolean modal, String email, boolean estAdmin){
+    public ChoixCatProduitEnchere(JFrame parent, String title, boolean modal, String email){
         super(parent, title, modal);
         this.email = email;
-        this.estAdmin = estAdmin;
         this.setSize(300, 200);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -75,15 +74,9 @@ public class ChoixCatProduitEnchere extends JDialog {
 
         okBouton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-                if (estAdmin) {
-                    FenetreTypeSalle fenetreSalle = new FenetreTypeSalle(null, "Type de Salle de vente", true, (String) Categorie.getSelectedItem());
-                    fenetreSalle.afficher();
-                    setVisible(false);
-                } else {
-                    FenetreVendreProduit fenetreVendre = new FenetreVendreProduit(null,"Vous souhaitez vendre un produit", true, email, (String) Categorie.getSelectedItem());
-                    fenetreVendre.afficher();
-                    setVisible(false);
-                }
+            	FenetreVendreProduit fenetreVendre = new FenetreVendreProduit(null,"Vous souhaitez vendre un produit", true, email, (String) Categorie.getSelectedItem());
+                fenetreVendre.afficher();
+                setVisible(false);
             }
         });
 

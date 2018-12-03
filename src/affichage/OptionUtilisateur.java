@@ -72,7 +72,7 @@ public class OptionUtilisateur extends JDialog {
 	 	
 	 	this.getContentPane().add(box);    
 	 	
-	 	//bouton utilisateur
+	 	//Je veux vendre un produit
 	 	bouton1.addActionListener(new ActionListener(){
 	 		public void actionPerformed(ActionEvent arg0) {
 	 			ChoixCatProduit choix = new ChoixCatProduit(null, "Choisissez la catégorie du produit à vendre", true, email, false);

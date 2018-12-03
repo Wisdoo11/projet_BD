@@ -132,19 +132,19 @@ public class FenetreAjoutProduits extends JDialog {
 				int elt1, elt2;
 				int salle = Integer.parseInt( (String) idSalleText.getText());
 
-
     			while (itProd.hasNext() ) {
-    				elt1 = Integer.parseInt(((String) itProd.next().getSelectedItem()).split(", ")[0]);
-    				elt2 = Integer.parseInt(itPrix.next().getText());
-					preStmt1 = "select id_produit from Vente1 where id_produit=" +
-							elt1; //TODO récupérer le temps suivant le type de vente
+    				
+    				elt1 = Integer.parseInt(((String) itProd.next().getSelectedItem()).split(", ")[0]); //on récupère l'id_produit du produit
+    				elt2 = Integer.parseInt(itPrix.next().getText()); //on récupère son prix de départ
+					preStmt1 = "select id_produit from Vente1 where id_produit=" + elt1;
 					requete1 = new Requete(preStmt1);
 					selection = new ArrayList<String[]>();
 					requete1.getSelection(selection);
+					//on vérifie que le produit que l'on veut mettre en vente n'est pas déjà mis à la vente
 					if (!selection.isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Vous ne pouvez pas ajouter plusieurs fois le même produit", " ", JOptionPane.INFORMATION_MESSAGE);
 					} else {
-
+						//sinon on l'ajoute à la base de données
 						preStmt = "insert into Vente1(id_produit, id_salle, prix_depart, temps) values("
 								+ elt1 + ", " + salle +	"," + elt2 + ", " + "CURRENT_TIMESTAMP" + ")"; //TODO récupérer le temps suivant le type de vente
 						Requete requete = new Requete(preStmt);

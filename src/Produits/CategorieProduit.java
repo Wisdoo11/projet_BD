@@ -2,7 +2,7 @@ package Produits;
 
 public enum CategorieProduit {
 	
-	//JOUETS,
+	JOUETS,
 	ELECTROMENAGER,
 	MEUBLE,
 	//DECORATION,
@@ -16,8 +16,8 @@ public enum CategorieProduit {
 	TV_SON_PHOTO,
 	//AUTOMOBILE,
 	//BAGAGERIE,
-	//VETEMENTS,
-	//CHAUSSURE,
+	VETEMENTS,
+	//CHAUSSURES,
 	//BEBE,
 	//SPORT,
 	//ALIMENTATION,

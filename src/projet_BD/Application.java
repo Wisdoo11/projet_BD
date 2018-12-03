@@ -12,25 +12,29 @@ public class Application {
 	public static void main(String[] args) throws SQLException {
 		
 		// peuplage de la table caractéristique
-		//String description = "";
-		//String cate;
-		/*for (CategorieProduit cat:CategorieProduit.values()) {
+		/*String description = "";
+		String cate;
+		for (CategorieProduit cat:CategorieProduit.values()) {
 			switch(cat) {
 			case INFORMATIQUE:
-				description = "ordinateurs, matériel informatique, connectiques informatiques, accessoires informatiques, etc.";
+				description = "Ordinateurs, matériel informatique, connectiques informatiques, accessoires informatiques, etc.";
 				break;
 			case ELECTROMENAGER:
-				description = "appareils et outils électriques domestiques";
+				description = "Appareils et outils électriques domestiques";
 				break;
 			case TELEPHONIE:
-				description = "téléphones et accessoires téléphoniques (écouteurs, kits mains-libres, etc) ";
+				description = "Téléphones et accessoires téléphoniques (écouteurs, kits mains-libres, etc) ";
 				break;
 			case TV_SON_PHOTO:
-				description = "télévisions, enceintes, appareils photo et accesoires ...";
+				description = "Télévisions, enceintes, appareils photo et accesoires ...";
 				break;
 			case MEUBLE:
-				description = "grandes variétés de meubles ...";
+				description = "Grandes variétés de meubles ...";
 				break;
+			case JOUETS:
+				description = "Des jouets de toutes les sortes...";
+			case VETEMENTS:
+				description = "'Des vetements de toutes les sortes...";
 			case AUTRE:
 				description = "autre";
 			}
@@ -38,14 +42,17 @@ public class Application {
 			String preStmt = "insert into Categorie1 values ('" + cate + "', '" + description + "')";
 		    System.out.println(preStmt);
 		    Requete requete = new Requete(preStmt);
-		    requete.execute();
+		    requete.executeUpdateReq();
 		}*/
 		
 
 	    //quelques requetes de tests
-	    String preStmt = "delete from Salle1 where id_salle=33";
+	    String preStmt = "select * from Caracteristique1 where id_produit=3";
 	    Requete requete = new Requete(preStmt);
-	    requete.executeUpdateReq();
+	    //requete.executeUpdateReq();
+	    requete.execute();
+	    
+	    System.out.println("");
 	    
 	    // requete non valide car violation de la contrainte d'intégrité : clé primaire
 	    //String preStmt1 = "insert into Utilisateur1 values ('toto3@toto3.fr', 'toto3', 'toto3', '2 avenue toto3')";
@@ -55,9 +62,9 @@ public class Application {
 	    //} catch (SQLIntegrityConstraintViolationException e) { // recuperation de l'erreur
 	    //}
 	    
-	    String preStmt2 = "select * from Produit1";
-	    Requete requete2 = new Requete(preStmt2);
-	    requete2.execute();
+	    //String preStmt2 = "select * from Categorie1";
+	    //Requete requete2 = new Requete(preStmt2);
+	    //requete2.execute();
 		
 	    // ouverture de l'application
 		FenetreAccueil fenetre = new FenetreAccueil();
