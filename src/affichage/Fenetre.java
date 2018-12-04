@@ -8,24 +8,26 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class Fenetre extends JFrame {
+public class Fenetre extends JDialog {
 	
   private JButton bouton1 = new JButton("Mise en place salle des ventes");
   private JButton bouton2 = new JButton("Réaliser une enchère");
+  private JButton bouton6 = new JButton("Ajouter des produits dans une salle de vente");
   private JButton bouton3 = new JButton("Fin de ventes");
   private JButton bouton4 = new JButton("Me déconnecter");
   private JButton bouton5 = new JButton("Ajouter une caractégorie de produit");
 
-  public Fenetre() {
-	  
+  public Fenetre(JFrame parent, String title, boolean modal) {
+	super(parent, title, modal);
     this.setTitle("Enchères BDD");
-    this.setSize(350, 300);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setSize(350, 400);
+    this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
     this.setLocationRelativeTo(null);
     this.getContentPane().setLayout(new FlowLayout());
     
@@ -47,6 +49,9 @@ public class Fenetre extends JFrame {
  	Box b3 = Box.createHorizontalBox();
  	b3.add(bouton5);
  	
+ 	Box b5 = Box.createHorizontalBox();
+ 	b5.add(bouton6);
+ 	
  	Box b2 = Box.createHorizontalBox(); 
  	b2.add(bouton2);
  	b2.add(Box.createRigidArea(new Dimension(10,0)));
@@ -57,6 +62,8 @@ public class Fenetre extends JFrame {
  	    
  	Box box = Box.createVerticalBox();
  	box.add(b1);
+ 	box.add(Box.createRigidArea(new Dimension(0,20)));
+ 	box.add(b5);
  	box.add(Box.createRigidArea(new Dimension(0,20)));
  	box.add(b3);
  	box.add(Box.createRigidArea(new Dimension(0,20)));
@@ -80,6 +87,16 @@ public class Fenetre extends JFrame {
         public void actionPerformed(ActionEvent arg0) {
       	  AjouterCategorie choix = new AjouterCategorie(null, "Catégorie des produits à vendre", true);
       	  choix.afficher();
+        }
+      }
+      );
+    
+    //ajouter un produit à vendre dans une salle de vente
+    bouton6.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent arg0) {
+        	//cette fenêtre affiche un menu déroulant des catégories de produits mis à la vente
+        	FenetreChoixCatAjoutProdSalle choix = new FenetreChoixCatAjoutProdSalle(null, "Catégorie des produits à vendre", true, true);
+      	  	choix.afficher();
         }
       }
       );
@@ -108,8 +125,8 @@ public class Fenetre extends JFrame {
 	});
     this.setVisible(true);
   }
-
-  public static void main(String[] main){
-    Fenetre fen = new Fenetre();
+  
+  public static void main(String[] args) {
+	  Fenetre fenetre = new Fenetre(null, "Que souhaitez-vous faire ?", true);
   }
 }

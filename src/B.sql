@@ -18,7 +18,7 @@ insert into Categorie1 values ('Meuble', 'Grandes variétés de meubles ...');
 insert into Categorie1 values ('Informatique', 'Ordinateurs, matériel informatique, connectiques informatiques, accessoires informatiques, etc.');
 insert into Categorie1 values ('Telephonie', 'Téléphones et accessoires téléphoniques (écouteurs, kits mains-libres, etc) ');
 insert into Categorie1 values ('Tv_son_photo', 'Télévisions, enceintes, appareils photo et accesoires ...');
-insert into Categorie1 values ('Gaming', 'Ordinateurs, souris, clavier, écrans et casque');
+insert into Categorie1 values ('Gaming', 'Ordinateurs, souris, clavier, écrans et casque ...');
 insert into Categorie1 values ('Autre', 'autre');
 select * from Categorie1;
 
@@ -29,30 +29,31 @@ insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock)
 insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (4, 'Vetements', 'vilayvos@gmail.com', 'Jeans', 35, 5);
 insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (5, 'Vetements', 'josephine@gmail.com', 'Chemise', 20, 6);
 insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (6, 'Electromenager', '‎etienne.hurez@boulanger.fr', 'Boulloire', 20.99, 25);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (7, 'Electromenager', '‎etienne.hurez@boulanger.fr', 'Cafetière', 45.5, 15);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (8, 'Electromenager', 'vilayvos@gmail.com', 'Four', 26, 3);
+insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (7, 'Electromenager', '‎etienne.hurez@boulanger.fr', 'Cafetière', 200.5, 15);
+insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (8, 'Electromenager', 'vilayvos@gmail.com', 'Four', 599, 1);
 insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (9, 'Electromenager', 'rick@gmail.com', 'Micro-onde', 22, 8);
 insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (10, 'Informatique', 'vilayvos@gmail.com', 'Clavier', 9.50, 5);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (11, 'Gaming', 'ballesteros.enrique@fnac-darty.fr', 'Ordinateur bureau', 1099, 20);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (12, 'Gaming', 'ballesteros.enrique@fnac-darty.fr', 'Souris', 99, 20);
+insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (11, 'Gaming', 'ballesteros.enrique@fnac-darty.fr', 'Ordinateur bureau', 3499, 20);
+insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (12, 'Gaming', 'ballesteros.enrique@fnac-darty.fr', 'Souris', 60, 20);
 insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (13, 'Gaming', '‎etienne.hurez@boulanger.fr', 'Clavier', 159, 16);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (14, 'Meuble', '‎etienne.hurez@boulanger.fr', 'Commode', 99, 8);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (15, 'Meuble', 'vilayvos@gmail.com', 'Table basse', 32, 3);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (16, 'Meuble', 'lucasv@gmail.com', 'Table basse', 20, 2);
 select * from Produit1;
 
-insert into Salle1(nom_categorie) values ('Vetements');
-insert into Salle1(nom_categorie) values ('Jouets');
+--peuplage de la table Salle1
+insert into Salle1(id_salle, nom_categorie, type_vente, est_libre, est_revocable, enchere_multiple) values (1, 'Vetements', 0, 1, 1, 1);
+insert into Salle1(id_salle, nom_categorie, type_vente, est_libre, est_revocable, enchere_multiple) values (2, 'Informatique', 1, 1, 0, 1);
 select * from Salle1;
 
-
-insert into Vente1(id_produit, id_salle, prix_depart, temps) values (1, 1, 5.1, '03-NOV-18 03.02.08 PM');
+--peuplage de la table Vente1
+insert into Vente1(id_vente, id_produit, id_salle, prix_depart, temps) values (1, 3, 1, 80, '04-DEC-18 03.02.08 PM'); --pour la Salle 1
+insert into Vente1(id_vente, id_produit, id_salle, prix_depart, temps) values (1, 4, 1, 50, '04-DEC-18 03.02.08 PM');
+insert into Vente1(id_vente, id_produit, id_salle, prix_depart, temps) values (1, 5, 1, 30, '04-DEC-18 03.02.08 PM');
 select * from Vente1;
 
 
 insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values ('alex@gmail.com', 1, 8.2, CURRENT_TIMESTAMP, 2);
 select * from Enchere1;
 
+--peuplage de la table Caracteristique1
 insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 1, 'Noir');
 insert into Caracteristique1(nom, id_produit, valeur) values ('Liaison', 1, 'Filaire');
 insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 1, 'Logitech');
@@ -60,14 +61,48 @@ insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 2, 'HP')
 insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 2, 'Blanc');
 insert into Caracteristique1(nom, id_produit, valeur) values ('Taille de lécran', 2, '15.4 pouces');
 insert into Caracteristique1(nom, id_produit, valeur) values ('RAM', 2, '4 Go');
-insert into Caracteristique1(nom, id_produit, valeur) values ('Disque dur', 2, '1 To');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Stockage', 2, 'Disque dur 1 To');
 insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 3, 'Bleu');
 insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 4, 'Noir');
 insert into Caracteristique1(nom, id_produit, valeur) values ('Coupe', 4, 'Skinny');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Taille', 4, '36');
 insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 5, 'Blanche');
 insert into Caracteristique1(nom, id_produit, valeur) values ('Coupe des manches', 5, 'Longues');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Taille', 4, '38/40');
 insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 6, 'Noir');
-insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 6, 'Russells Hobbs');
---a compléter
-
+insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 6, 'Russell Hobbs');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 7, 'Delonghi');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 7, 'Noir');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Capcité', 7, '1.8 litres');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Numéro du modèle', 7, 'ECAM 22.110.B');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 8, 'Bosh');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 8, 'Noir');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Capcité', 8, '45 litres');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Numéro du modèle', 8, ' CMG636BW1');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Type', 8, 'Four encastrable');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 9, 'Samsung');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 9, 'Noir');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Capcité', 9, '25 litres');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 10, 'Noir');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Liaison', 10, 'Filaire');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 10, 'Logitech');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Rétroéclairage', 10, 'Non');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Type de produit', 10, 'Unité centrale uniquement');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 11, 'Noir');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 11, 'Asus ROG');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Processeur', 11, 'Intel Core i7 8700');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Mémoire', 11, '32');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Stockage', 11, '1 To SATA + 512 Go SSD');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 12, 'Noir');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Liaison', 12, 'Filaire');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 12, 'SteelSeries Rival 110');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Résolution', 12, '7200 cpi');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Boutons programmables', 12, '6');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Couleur', 13, 'Noir');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Liaison', 13, 'Filaire');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Marque', 13, 'Clavier Gaming Razer BlackWidow Chroma V2');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Rétroéclairage', 13, 'Oui : multicouleur');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Boutons programmables', 13, 'Oui');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Type', 13, 'Azerty');
+insert into Caracteristique1(nom, id_produit, valeur) values ('Mécanisme', 13, 'Clavier mécanique avec pavé numérique');
 select * from Caracteristique1;

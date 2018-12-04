@@ -57,7 +57,7 @@ public class ConfirmationCo {
 	
 	public boolean continuer(String email) {
 		if (coReussie && estAdmin) {
-			Fenetre fenetreAdmin = new Fenetre();
+			Fenetre fenetreAdmin = new Fenetre(null, "Que voulez-vous faire ?", true);
 		} else if (coReussie && !estAdmin) {
 			OptionUtilisateur fenetreUser = new OptionUtilisateur(null, "Bienvenue " + email, true, email);
 			fenetreUser.afficher();
