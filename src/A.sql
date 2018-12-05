@@ -51,7 +51,7 @@ CREATE TABLE Vente1
   id_produit INT REFERENCES Produit1(id_produit),
   id_salle INT REFERENCES Salle1(id_salle),
   prix_depart FLOAT CHECK(prix_depart >= 0),
-  temps TIMESTAMP -- date et heure de fin
+  temps DATETIME -- date et heure de fin
 );
 
 

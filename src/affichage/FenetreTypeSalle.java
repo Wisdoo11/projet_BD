@@ -176,13 +176,14 @@ public class FenetreTypeSalle extends JDialog {
 				System.out.println("id_produit \t nom \t prix de revient");
 				Requete requete1 = new Requete("Select Produit1.id_produit, Produit1.nom, Produit1.prix_revient\r\n" + 
 						"From Produit1\r\n" + 
+						"Where Produit1.nom_categorie = '" + categorie + "'\r\n" +
 						"MINUS\r\n" + 
 						"Select Produit1.id_produit, Produit1.nom, Produit1.prix_revient\r\n" +
 						"From Salle1, Vente1, Produit1\r\n" + 
 						"Where Salle1.nom_categorie = '" + categorie + "'\r\n" + 
 						"AND Produit1.nom_categorie = '" + categorie + "'\r\n" + 
 						"AND Vente1.id_salle = Salle1.id_salle\r\n" + 
-						"AND Vente1.id_produit = Produit1.id_produit"); //TODO à compléter : il faut afficher les produits qui ne sont pas encore mis à la vente
+						"AND Vente1.id_produit = Produit1.id_produit"); //
     			requete1.execute();
     	        
     	        FenetreChoixNbrProduits fenetre = new FenetreChoixNbrProduits(null, "Nombre de produits à vendre dans la salle", true,

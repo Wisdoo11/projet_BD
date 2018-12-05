@@ -23,24 +23,24 @@ insert into Categorie1 values ('Autre', 'autre');
 select * from Categorie1;
 
 --puplage de la table Produit1
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (1, 'Informatique', 'vilayvos@gmail.com', 'Souris', 10.50, 10);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (2, 'Informatique', 'vilayvos@gmail.com', 'Ordinateur portable', 399, 1);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (3, 'Vetements', 'seb@gmail.com', 'Jeans', 50.2, 2);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (4, 'Vetements', 'vilayvos@gmail.com', 'Jeans', 35, 5);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (5, 'Vetements', 'josephine@gmail.com', 'Chemise', 20, 6);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (6, 'Electromenager', '‎etienne.hurez@boulanger.fr', 'Boulloire', 20.99, 25);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (7, 'Electromenager', '‎etienne.hurez@boulanger.fr', 'Cafetière', 200.5, 15);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (8, 'Electromenager', 'vilayvos@gmail.com', 'Four', 599, 1);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (9, 'Electromenager', 'rick@gmail.com', 'Micro-onde', 22, 8);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (10, 'Informatique', 'vilayvos@gmail.com', 'Clavier', 9.50, 5);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (11, 'Gaming', 'ballesteros.enrique@fnac-darty.fr', 'Ordinateur bureau', 3499, 20);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (12, 'Gaming', 'ballesteros.enrique@fnac-darty.fr', 'Souris', 60, 20);
-insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock) values (13, 'Gaming', '‎etienne.hurez@boulanger.fr', 'Clavier', 159, 16);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Informatique', 'vilayvos@gmail.com', 'Souris', 10.50, 10);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Informatique', 'vilayvos@gmail.com', 'Ordinateur portable', 399, 1);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Vetements', 'seb@gmail.com', 'Jeans', 50.2, 2);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Vetements', 'vilayvos@gmail.com', 'Jeans', 35, 5);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Vetements', 'josephine@gmail.com', 'Chemise', 20, 6);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Electromenager', '‎etienne.hurez@boulanger.fr', 'Boulloire', 20.99, 25);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Electromenager', '‎etienne.hurez@boulanger.fr', 'Cafetière', 200.5, 15);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Electromenager', 'vilayvos@gmail.com', 'Four', 599, 1);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Electromenager', 'rick@gmail.com', 'Micro-onde', 22, 8);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Informatique', 'vilayvos@gmail.com', 'Clavier', 9.50, 5);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Gaming', 'ballesteros.enrique@fnac-darty.fr', 'Ordinateur bureau', 3499, 20);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Gaming', 'ballesteros.enrique@fnac-darty.fr', 'Souris', 60, 20);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Gaming', '‎etienne.hurez@boulanger.fr', 'Clavier', 159, 16);
 select * from Produit1;
 
 --peuplage de la table Salle1
-insert into Salle1(id_salle, nom_categorie, type_vente, est_libre, est_revocable, enchere_multiple) values (1, 'Vetements', 0, 1, 1, 1);
-insert into Salle1(id_salle, nom_categorie, type_vente, est_libre, est_revocable, enchere_multiple) values (2, 'Informatique', 1, 1, 0, 1);
+insert into Salle1(nom_categorie, type_vente, est_libre, est_revocable, enchere_multiple) values ('Vetements', 0, 1, 1, 1);
+insert into Salle1(nom_categorie, type_vente, est_libre, est_revocable, enchere_multiple) values ('Informatique', 1, 1, 0, 1);
 select * from Salle1;
 
 --peuplage de la table Vente1
