@@ -148,8 +148,6 @@ public class FenetreVendreProduit extends JDialog{
     			+ "', '" + emailText.getText() + "', '" + (String) produit.getSelectedItem() + "', "
     					+ prixText.getText() + ", " + stockText.getText() + ")";
     			Requete requete = new Requete(preStmt);
-    			requete.executeUpdateReq();
-    			
     			//on récupère l'identifiant du nouveau produit 
 			    String id = requete.recupIdProduit((String) categorieBox.getSelectedItem(), emailText.getText(), 
 			    		(String) produit.getSelectedItem());

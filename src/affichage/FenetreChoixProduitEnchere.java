@@ -116,9 +116,33 @@ public class FenetreChoixProduitEnchere extends JDialog {
 				String idSalle = idBox.getSelectedItem().toString().split(" - ")[0];
 				String idVente = idBox.getSelectedItem().toString().split(" - ")[1];
 				String nomProduit = produitBox.getSelectedItem().toString().split(" - ")[1];
-				System.out.println(idSalle + ", " + idVente + ", " + nomProduit);
+				System.out.println("Salle de vente du produit : " + idSalle + "\nSon numéro de vente : " + idVente + "\nSon nom : " + nomProduit);
 				
-				fenetre = new FenetreRealiserEnchere(null, "Bienvenue dans la salle n° " + idSalle + "de vente du produit", true, email, categorie, nomProduit, idVente, idSalle);
+				//pour récuperer le prix courant de l'enchère
+    			String prixCourant;
+    			
+    			Requete requete00 = new Requete("select COUNT(*) from Enchere1 where id_vente=" + idVente);
+    			requete00.execute();
+    			//si pas d'enchère on récupère le prix de départ
+    			if(requete00.premiereEnchereDeVente()) {
+    				Requete requete0b = new Requete("select prix_depart from Vente1 where id_vente=" + idVente);
+    				prixCourant = requete0b.recupPrixDepartEnchere();
+    				System.out.println("Le prix de départ est : " + prixCourant + "euros");
+    			} else {
+        			String preStmt0 = "select prix_propose, quantite\r\n"
+        					+ "From Enchere1\r\n"
+        					+ "Where id_vente=" + idVente + "\r\n"
+        					+ "Group by id_enchere, email, id_vente, prix_propose, temps, quantite\r\n"
+        					+ "HAVING temps=max(temps)";
+        			Requete requete0 = new Requete(preStmt0);
+        			prixCourant = "" + requete0.recupPrixCourantEnchere() + "";
+        			System.out.println("Le prix courant est : " + prixCourant);
+    			}
+
+    			JOptionPane.showMessageDialog(null, "Le prix de départ est : " + prixCourant + "euros", " ", JOptionPane.INFORMATION_MESSAGE);
+    			
+				
+				fenetre = new FenetreRealiserEnchere(null, "Bienvenue dans la salle n° " + idSalle + "de vente du produit", true, email, categorie, nomProduit, idVente, idSalle, prixCourant);
 				fenetre.afficher();
 				
 				setVisible(false);

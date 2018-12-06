@@ -132,6 +132,7 @@ public class FenetreNouvelUtilisateur extends JDialog {
 				Requete requete = new Requete(preStmt);
 			    requete.execute();
 			    
+			    System.out.println("email \t nom \t prenom \t adresse postale");
 				String preStmt1 = "select * from Utilisateur1";
 				//System.out.println(preStmt);
 				Requete requete1 = new Requete(preStmt1);

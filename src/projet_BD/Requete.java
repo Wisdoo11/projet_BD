@@ -44,6 +44,9 @@ public class Requete {
         }
     }
     
+    /**
+     * Cette méthode exécute des requêtes de type insert, update, delete
+     */
 	public void executeUpdateReq() {
 		
 		try {
@@ -61,7 +64,7 @@ public class Requete {
 	        PreparedStatement stmt = conn.prepareStatement(this.preStmt);
 	  	    // Execution de la requete
 		    int rset = stmt.executeUpdate();
-		    System.out.println("Nombre d'élèments ajoutés : " + rset); // TODO à modifier
+		    System.out.println("Nombre d'élèments modifiés : " + rset);
 
 	  	    // Terminaison de la transaction
 	  	    conn.commit();
@@ -75,6 +78,13 @@ public class Requete {
 	        }
 	}
 	
+	/**
+	 * Cette méthode exécute une transaction de type select id et récupère cet id
+	 * @param categorie
+	 * @param email
+	 * @param produit
+	 * @return
+	 */
 	public String recupIdProduit(String categorie, String email, String produit) {
 		String id = "";
         try {
@@ -87,8 +97,14 @@ public class Requete {
   	    // Demarrage de la transaction
   	    conn.setAutoCommit(false);
   	    conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
-
+  	    
   	    // Creation de la requete
+        PreparedStatement stmt1 = conn.prepareStatement(this.preStmt);
+  	    // Execution de la requete
+	    int rset1 = stmt1.executeUpdate();
+	    System.out.println("Nombre d'élèments modifiés : " + rset1);
+
+  	    // Creation de la requete qui récupère l'indice du produit
         PreparedStatement stmt = conn.prepareStatement("select max(id_produit) from Produit1 where "
         		+ "nom_categorie='" + categorie + "' and email='" + email + "' and nom='" + produit + "'");
   	    // Execution de la requete
@@ -97,9 +113,9 @@ public class Requete {
         ResultSetMetaData rsetmd = rset.getMetaData();
         int i = rsetmd.getColumnCount();
         rset.next();
-        System.out.println(i);
+        System.out.println("Nombre d'élèments récupéré : " + i);
         id = rset.getString(1);
-        System.out.println(id);
+        System.out.println("id_produit = " + id);
 
   	    // Fermeture
   	    rset.close();
@@ -107,6 +123,7 @@ public class Requete {
   	    // Terminaison de la transaction
   	    conn.commit();
   	    
+  	    stmt1.close();
         stmt.close();
         conn.close();
 
@@ -131,20 +148,121 @@ public class Requete {
   	    conn.setAutoCommit(false);
   	    conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
   	    
+  	    // Creation de la requete principale
+        PreparedStatement stmt1 = conn.prepareStatement(this.preStmt);
+  	    // Execution de la requete
+	    int rset1 = stmt1.executeUpdate();
+	    System.out.println("Nombre d'élèments modifiés : " + rset1);
+
+  	    
   	    // Creation de la requete
   	    
         PreparedStatement stmt = conn.prepareStatement("select max(id_salle) from Salle1 where "
         		+ "nom_categorie='" + categorie + "' and type_vente=" + vente + " and est_libre=" + libre + 
-        		" and est_revocable=" + revocable + " and enchere_multiple=" + enchere); // TODO il faut se déplacer en serializable !
+        		" and est_revocable=" + revocable + " and enchere_multiple=" + enchere);
   	    // Execution de la requete
         ResultSet rset = stmt.executeQuery();
         
         ResultSetMetaData rsetmd = rset.getMetaData();
         int i = rsetmd.getColumnCount();
         rset.next();
-        System.out.println( i);
+        System.out.println(i);
         id = rset.getString(1);
         System.out.println("Le numéro de la salle est : " + id);
+
+  	    // Fermeture
+  	    rset.close();
+  	    
+  	    // Terminaison de la transaction
+  	    conn.commit();
+  	    
+  	    stmt1.close();
+        stmt.close();
+        conn.close();
+
+        } catch (SQLException e) {
+            System.err.println("failed !");
+            e.printStackTrace(System.err);
+        }
+        
+        return id;
+    }
+	
+	public boolean premiereEnchereDeVente() {
+		boolean bool = false;
+        try {
+  	    // Enregistrement du driver Oracle
+  	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+  	    // Etablissement de la connection
+  	    Connection conn = DriverManager.getConnection(Requete.CONN_URL, Requete.USER, Requete.PASSWD);
+  	    
+  	    // Demarrage de la transaction
+  	    conn.setAutoCommit(false);
+  	    conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+  	    
+  	    // Creation de la requete
+        PreparedStatement stmt = conn.prepareStatement(this.preStmt);
+        
+  	    // Execution de la requete
+        ResultSet rset = stmt.executeQuery();
+        
+        ResultSetMetaData rsetmd = rset.getMetaData();
+        int i = rsetmd.getColumnCount();
+        rset.next();
+        String nb = rset.getString(1);;
+        System.out.println("nb résultats : " +nb);
+        
+        if (nb.equals("0")) { //si pas d'enchère
+        	System.out.println("Il n'y a pas encore d'enchères proposés pour cette vente");
+        	bool = true;
+        } else {
+        	System.out.println("prix: ");
+        }
+  	    
+  	    // Terminaison de la transaction
+  	    conn.commit();
+  	    
+        stmt.close();
+        conn.close();
+
+        } catch (SQLException e) {
+            System.err.println("failed !");
+            e.printStackTrace(System.err);
+        }
+		return bool;
+	}
+	
+	/**
+	 * Cette méthode récupère le prix courante d'une vente en cours
+	 * Si aucune enchère n'a été effectuée, alors renvoie 0
+	 * @return
+	 */
+	public String recupPrixDepartEnchere() {
+		String prix = "";
+        try {
+  	    // Enregistrement du driver Oracle
+  	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+  	    // Etablissement de la connection
+  	    Connection conn = DriverManager.getConnection(Requete.CONN_URL, Requete.USER, Requete.PASSWD);
+  	    
+  	    // Demarrage de la transaction
+  	    conn.setAutoCommit(false);
+  	    conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+  	    
+  	    // Creation de la requete
+        PreparedStatement stmt = conn.prepareStatement(this.preStmt);
+        
+  	    // Execution de la requete
+        ResultSet rset = stmt.executeQuery();
+        
+        ResultSetMetaData rsetmd = rset.getMetaData();
+        int i = rsetmd.getColumnCount();
+        rset.next();
+        System.out.println("Nombre de colonnes récupéré : " + i);
+        
+        prix = rset.getString(1);
 
   	    // Fermeture
   	    rset.close();
@@ -160,8 +278,56 @@ public class Requete {
             e.printStackTrace(System.err);
         }
         
-        return id;
+        return prix;
     }
+	
+	/**
+	 * Cette méthode récupère le prix courant d'une vente aux enchères
+	 * @return
+	 */
+	public float recupPrixCourantEnchere() {
+		float prix = -1;
+        try {
+  	    // Enregistrement du driver Oracle
+  	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+  	    // Etablissement de la connection
+  	    Connection conn = DriverManager.getConnection(Requete.CONN_URL, Requete.USER, Requete.PASSWD);
+  	    
+  	    // Demarrage de la transaction
+  	    conn.setAutoCommit(false);
+  	    conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+  	    
+  	    // Creation de la requete
+        PreparedStatement stmt = conn.prepareStatement(this.preStmt);
+        
+  	    // Execution de la requete
+        ResultSet rset = stmt.executeQuery();
+        
+        ResultSetMetaData rsetmd = rset.getMetaData();
+        int i = rsetmd.getColumnCount();
+        rset.next();
+        System.out.println("Nombre de colonnes récupéré : " + i);
+        
+        prix = rset.getFloat("prix_propose")/rset.getInt("quantite");
+
+  	    // Fermeture
+  	    rset.close();
+  	    
+  	    // Terminaison de la transaction
+  	    conn.commit();
+  	    
+        stmt.close();
+        conn.close();
+
+        } catch (SQLException e) {
+            System.err.println("failed !");
+            e.printStackTrace(System.err);
+        }
+        
+        return prix;
+    }
+	
 	
 	/**
 	 * Cette méthode affiche les réponses d'une reqête SQL

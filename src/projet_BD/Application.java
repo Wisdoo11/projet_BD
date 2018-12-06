@@ -9,45 +9,10 @@ import Produits.CategorieProduit;
 
 public class Application {
 
-	public static void main(String[] args) throws SQLException {
-		
-		// peuplage de la table caractéristique
-		/*String description = "";
-		String cate;
-		for (CategorieProduit cat:CategorieProduit.values()) {
-			switch(cat) {
-			case INFORMATIQUE:
-				description = "Ordinateurs, matériel informatique, connectiques informatiques, accessoires informatiques, etc.";
-				break;
-			case ELECTROMENAGER:
-				description = "Appareils et outils électriques domestiques";
-				break;
-			case TELEPHONIE:
-				description = "Téléphones et accessoires téléphoniques (écouteurs, kits mains-libres, etc) ";
-				break;
-			case TV_SON_PHOTO:
-				description = "Télévisions, enceintes, appareils photo et accesoires ...";
-				break;
-			case MEUBLE:
-				description = "Grandes variétés de meubles ...";
-				break;
-			case JOUETS:
-				description = "Des jouets de toutes les sortes...";
-			case VETEMENTS:
-				description = "'Des vetements de toutes les sortes...";
-			case AUTRE:
-				description = "autre";
-			}
-			cate = cat.toString().toCharArray()[0] + cat.toString().substring(1,cat.toString().length()).toLowerCase();
-			String preStmt = "insert into Categorie1 values ('" + cate + "', '" + description + "')";
-		    System.out.println(preStmt);
-		    Requete requete = new Requete(preStmt);
-		    requete.executeUpdateReq();
-		}*/
-		
+	public static void main(String[] args) throws SQLException {	
 
 	    //quelques requetes de tests
-	    String preStmt = "select * from Enchere1";
+	    String preStmt = "select * from enchere1";
 	    Requete requete = new Requete(preStmt);
 	    //requete.executeUpdateReq();
 	    requete.execute();

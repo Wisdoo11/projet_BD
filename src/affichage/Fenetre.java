@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 public class Fenetre extends JDialog {
 	
   private JButton bouton1 = new JButton("Mise en place salle des ventes");
-  private JButton bouton2 = new JButton("Réaliser une enchère");
   private JButton bouton6 = new JButton("Ajouter des produits dans une salle de vente");
   private JButton bouton3 = new JButton("Fin de ventes");
   private JButton bouton4 = new JButton("Me déconnecter");
@@ -26,7 +25,7 @@ public class Fenetre extends JDialog {
   public Fenetre(JFrame parent, String title, boolean modal) {
 	super(parent, title, modal);
     this.setTitle("Enchères BDD");
-    this.setSize(350, 400);
+    this.setSize(600, 300);
     this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
     this.setLocationRelativeTo(null);
     this.getContentPane().setLayout(new FlowLayout());
@@ -45,16 +44,13 @@ public class Fenetre extends JDialog {
  	//organisation des boutons sur la fenêtre
     Box b1 = Box.createHorizontalBox();
     b1.add(bouton1);
+    b1.add(Box.createRigidArea(new Dimension(10,0)));
+    b1.add(bouton6);
     
  	Box b3 = Box.createHorizontalBox();
  	b3.add(bouton5);
  	
- 	Box b5 = Box.createHorizontalBox();
- 	b5.add(bouton6);
- 	
  	Box b2 = Box.createHorizontalBox(); 
- 	b2.add(bouton2);
- 	b2.add(Box.createRigidArea(new Dimension(10,0)));
  	b2.add(bouton3);
  	
  	Box b4 = Box.createHorizontalBox();
@@ -62,8 +58,6 @@ public class Fenetre extends JDialog {
  	    
  	Box box = Box.createVerticalBox();
  	box.add(b1);
- 	box.add(Box.createRigidArea(new Dimension(0,20)));
- 	box.add(b5);
  	box.add(Box.createRigidArea(new Dimension(0,20)));
  	box.add(b3);
  	box.add(Box.createRigidArea(new Dimension(0,20)));

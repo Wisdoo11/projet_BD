@@ -72,8 +72,8 @@ public class ChoixCatProduitEnchere extends JDialog {
             public void actionPerformed(ActionEvent arg0) {
             	System.out.print("Voici les produits qui sont vendus: \n");
             	//affiche les produits à vendre avec leurs caractéritisques
-            	System.out.println("id_produit, nom du produit, stock, caracteristique, description\n");
-            	Requete requete = new Requete("Select Produit1.id_produit, Produit1.nom, Produit1.stock, Caracteristique1.nom, Caracteristique1.valeur\r\n" + 
+            	System.out.println("id_produit, nom du produit, prix de depart stock, caracteristique, description");
+            	Requete requete = new Requete("Select Produit1.id_produit, Produit1.nom, Vente1.prix_depart, Produit1.stock, Caracteristique1.nom, Caracteristique1.valeur\r\n" + 
             			"From Salle1, Vente1, Produit1, Caracteristique1\r\n" + 
             			"Where Salle1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" + 
             			"AND Produit1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" + 
@@ -81,14 +81,14 @@ public class ChoixCatProduitEnchere extends JDialog {
             			"AND Caracteristique1.id_produit=Produit1.id_produit\r\n" +
             			"AND Vente1.id_produit=Produit1.id_produit\r\n" +
             			"UNION\r\n" +
-            			"Select Produit1.id_produit, Produit1.nom, Produit1.stock, NULL, NULL\r\n" + 
+            			"Select Produit1.id_produit, Produit1.nom, Vente1.prix_depart, Produit1.stock, NULL, NULL\r\n" + 
             			"From Salle1, Vente1, Produit1\r\n" + 
             			"Where Salle1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" +
             			"AND Produit1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" + 
             			"AND Vente1.id_salle=Salle1.id_salle\r\n" + 
             			"AND Vente1.id_produit=Produit1.id_produit\r\n" +
             			"MINUS\r\n" +
-            			"Select Produit1.id_produit, Produit1.nom, Produit1.stock, NULL, NULL\r\n" + 
+            			"Select Produit1.id_produit, Produit1.nom, Vente1.prix_depart, Produit1.stock, NULL, NULL\r\n" + 
             			"From Salle1, Vente1, Produit1, Caracteristique1\r\n" + 
             			"Where Salle1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" + 
             			"AND Produit1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" + 

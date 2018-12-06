@@ -143,6 +143,8 @@ public class FenetreTypeSalle extends JDialog {
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
     			int type1 = 1, libre1 = 1, revocable1 = 0, enchere1 = 1;
+    			
+    			//on récupère les propriétés de la vente
     			if (type.getSelectedItem().equals("Descendante")) {
     				type1 = 0;
     			}
@@ -158,9 +160,7 @@ public class FenetreTypeSalle extends JDialog {
     			String preStmt = "insert into Salle1(nom_categorie, type_vente, est_libre, est_revocable, enchere_multiple)"
     					+ " values ('" + categorieText.getText() + "', '" + type1 + "', '" + libre1 + "', '"
     					+ revocable1 + "', '" + enchere1 + "')";
-    			Requete requete = new Requete(preStmt);
-    			requete.executeUpdateReq();
-    			
+    			Requete requete = new Requete(preStmt);   			
 			    String id = requete.recupIdSalle(categorieText.getText(), type1, libre1, revocable1, enchere1);
 			    
     			infoSalle = new InfoSalle(id, categorieText.getText(), type1, libre1, revocable1, enchere1);
@@ -169,7 +169,7 @@ public class FenetreTypeSalle extends JDialog {
     	        //affiche la requête
     	        System.out.println("insert into Salle1(id_salle, nom_categorie, type_vente, est_libre, est_revocable, enchere_multiple)"
     					+ " values (" + id + ", '" + categorieText.getText() + "', " + type1 + ", " + libre1 + ", "
-    					+ revocable1 + ", " + enchere1 + ")");
+    					+ revocable1 + ", " + enchere1 + ")");//TODO à effacer ?
     	        
     	        //affiche tout les produits de la catégorie catégorie
 				System.out.println("Voici les produits de la catégorie : " + categorie);

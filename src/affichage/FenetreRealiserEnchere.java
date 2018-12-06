@@ -21,18 +21,20 @@ import projet_BD.Requete;
 
 public class FenetreRealiserEnchere extends JDialog {
 	
-	private String email, categorie, idVente, idSalle, nomProduit;
+	private String email, categorie, idVente, idSalle, nomProduit, prixCourant;
 	private JLabel emailLabel, nomLabel, CategorieLabel, prixProposeLabel, quantiteLabel;
 	private JTextField prixProposeText;
 	private JComboBox quantiteBox;
 
-	public FenetreRealiserEnchere(JFrame parent, String title, boolean modal, String email, String categorie, String nomProduit, String idVente, String idSalle){
+	public FenetreRealiserEnchere(JFrame parent, String title, boolean modal, String email, String categorie, 
+			String nomProduit, String idVente, String idSalle, String prixCourant){
 		super(parent, title, modal);
 		this.email = email;
 		this.nomProduit = nomProduit;
 		this.categorie = categorie;
 		this.idVente = idVente;
 		this.idSalle = idSalle;
+		this.prixCourant = prixCourant;
 		this.setSize(650, 400);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -84,7 +86,6 @@ public class FenetreRealiserEnchere extends JDialog {
 				"AND Vente1.id_vente=" + idVente +"\r\n" +
 				"AND Vente1.id_salle=" + idSalle + "\r\n"
 				);
-		requeteStock.execute();
 		ArrayList<String[]> selection = new ArrayList<String[]>();
 		requeteStock.getSelection(selection);
 		
@@ -122,17 +123,24 @@ public class FenetreRealiserEnchere extends JDialog {
 
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
-    			// on ajoute l'enchère dans la table Enchere1
-    			String preStmt = "insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values('" +
-    					email + "', " + idVente  + ", " + prixProposeText.getText().toString() + ", CURRENT_TIMESTAMP" +
-    					", " + quantiteBox.getSelectedItem().toString() + ")";
-    			Requete requete = new Requete(preStmt);
-    			requete.executeUpdateReq();
-
-    	        System.out.println(preStmt);
-    	        
-    	        //on ferme la fenêtre à la fin de la manipulation
-    	        setVisible(false);
+    			
+    			if (Float.parseFloat(prixProposeText.getText().toString())/Float.parseFloat(quantiteBox.getSelectedItem().toString()) 
+    					<= Float.parseFloat(prixCourant)) {
+        			JOptionPane.showMessageDialog(null, "Le prix de départ est : " + prixCourant + "euros" 
+        					+ "\nVeuillez rentrer un prix supérieur à celui-ci", " ", JOptionPane.INFORMATION_MESSAGE);
+    			} else {
+	    			// on ajoute l'enchère dans la table Enchere1
+	    			String preStmt = "insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values('" +
+	    					email + "', " + idVente  + ", " + prixProposeText.getText().toString() + ", CURRENT_TIMESTAMP" +
+	    					", " + quantiteBox.getSelectedItem().toString() + ")";
+	    			Requete requete = new Requete(preStmt);
+	    			requete.executeUpdateReq();
+	
+	    	        System.out.println(preStmt);
+	    	        
+	    	        //on ferme la fenêtre à la fin de la manipulation
+	    	        setVisible(false);
+    			}
     		}
     	});
 
