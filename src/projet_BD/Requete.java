@@ -328,6 +328,57 @@ public class Requete {
         return prix;
     }
 	
+	/**
+	 * Cette méthode récupère les infos type vente, type duree, revocabilité, multiplicité des enchères d'une vente
+	 * @return
+	 */
+	public int[] recupTypeSalle() {
+		int[] info = {-1,-1,-1,-1};
+        try {
+  	    // Enregistrement du driver Oracle
+  	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+  	    // Etablissement de la connection
+  	    Connection conn = DriverManager.getConnection(Requete.CONN_URL, Requete.USER, Requete.PASSWD);
+  	    
+  	    // Demarrage de la transaction
+  	    conn.setAutoCommit(false);
+  	    conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+  	    
+  	    // Creation de la requete
+        PreparedStatement stmt = conn.prepareStatement(this.preStmt);
+        
+  	    // Execution de la requete
+        ResultSet rset = stmt.executeQuery();
+        
+        ResultSetMetaData rsetmd = rset.getMetaData();
+        int i = rsetmd.getColumnCount();
+        rset.next();
+        System.out.println("Nombre de colonnes récupéré : " + i);
+        
+        info[0] = rset.getInt("type_vente");
+        info[1] = rset.getInt("est_libre");
+        info[2] = rset.getInt("est_revocable");
+        info[3] = rset.getInt("enchere_multiple");
+        
+
+  	    // Fermeture
+  	    rset.close();
+  	    
+  	    // Terminaison de la transaction
+  	    conn.commit();
+  	    
+        stmt.close();
+        conn.close();
+
+        } catch (SQLException e) {
+            System.err.println("failed !");
+            e.printStackTrace(System.err);
+        }
+        
+        return info;
+    }
+	
 	
 	/**
 	 * Cette méthode affiche les réponses d'une reqête SQL
@@ -344,6 +395,55 @@ public class Requete {
 	      System.out.println();
         }
     }
+    
+	public boolean aDejaEncherir() {
+		boolean bool = false;
+        try {
+  	    // Enregistrement du driver Oracle
+  	    DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+
+  	    // Etablissement de la connection
+  	    Connection conn = DriverManager.getConnection(Requete.CONN_URL, Requete.USER, Requete.PASSWD);
+  	    
+  	    // Demarrage de la transaction
+  	    conn.setAutoCommit(false);
+  	    conn.setTransactionIsolation(conn.TRANSACTION_SERIALIZABLE);
+  	    
+  	    // Creation de la requete
+        PreparedStatement stmt = conn.prepareStatement(this.preStmt);
+        
+  	    // Execution de la requete
+        ResultSet rset = stmt.executeQuery();
+        
+        ResultSetMetaData rsetmd = rset.getMetaData();
+        int i = rsetmd.getColumnCount();
+        rset.next();
+        String nb = rset.getString(1);;
+        System.out.println("nb résultats : " +nb);
+        
+        if (nb.equals("0")) { //si pas d'enchère
+        	System.out.println("L'utilisateur n'a pas encore enchéri");
+        	bool = false;
+        } else {
+        	System.out.println("L'utilisateur a déjà enchéri");
+        	bool = true;
+        }
+  	    
+  	    // Terminaison de la transaction
+  	    conn.commit();
+  	    
+        stmt.close();
+        conn.close();
+
+        } catch (SQLException e) {
+            System.err.println("failed !");
+            e.printStackTrace(System.err);
+        }
+		return bool;
+	}
+    
+    
+    
     
     /**
      * Cette méthode permet de récupérer les réponses d'une requête SQL sous la forme d'une ArrayList

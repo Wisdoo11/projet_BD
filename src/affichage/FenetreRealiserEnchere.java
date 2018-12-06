@@ -124,23 +124,74 @@ public class FenetreRealiserEnchere extends JDialog {
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
     			
-    			if (Float.parseFloat(prixProposeText.getText().toString())/Float.parseFloat(quantiteBox.getSelectedItem().toString()) 
-    					<= Float.parseFloat(prixCourant)) {
-        			JOptionPane.showMessageDialog(null, "Le prix de départ est : " + prixCourant + "euros" 
-        					+ "\nVeuillez rentrer un prix supérieur à celui-ci", " ", JOptionPane.INFORMATION_MESSAGE);
-    			} else {
-	    			// on ajoute l'enchère dans la table Enchere1
-	    			String preStmt = "insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values('" +
-	    					email + "', " + idVente  + ", " + prixProposeText.getText().toString() + ", CURRENT_TIMESTAMP" +
-	    					", " + quantiteBox.getSelectedItem().toString() + ")";
-	    			Requete requete = new Requete(preStmt);
-	    			requete.executeUpdateReq();
-	
-	    	        System.out.println(preStmt);
-	    	        
-	    	        //on ferme la fenêtre à la fin de la manipulation
-	    	        setVisible(false);
-    			}
+    			int[] info;
+    			int type, libre, revocable, enchereM; //TODO ici on ne gère pas la fin des enchères :
+    			//TODO les paramètres revocable et type : permet de déterminer le gagnant
+    			Requete requeteTypeVente = new Requete("select type_vente, est_libre, est_revocable, enchere_multiple\r\n"
+    					+ "From Salle1\r\n"
+    					+ "Where id_salle=" + idSalle);
+    			info = requeteTypeVente.recupTypeSalle();
+    			
+    			//si vente montante
+    			if (info[0]==1) { //si montante
+    				System.out.println("La vente est montante !");
+    				JOptionPane.showMessageDialog(null,	"La vente est montante !", " ", JOptionPane.INFORMATION_MESSAGE);
+    				if (info[3]==1) { //possiblité pour un même utilisateur d'enchérir plusieurs fois
+    					System.out.println("Encheres multiples possible !");
+    					JOptionPane.showMessageDialog(null,	"Encheres multiples possible !", " ", JOptionPane.INFORMATION_MESSAGE);
+    					
+    					if (Float.parseFloat(prixProposeText.getText().toString())
+    							/ Float.parseFloat(quantiteBox.getSelectedItem().toString()) <= Float
+										.parseFloat(prixCourant)) {
+    						JOptionPane.showMessageDialog(null,
+    								"Le prix de départ est : " + prixCourant + "euros"
+    										+ "\nVeuillez rentrer un prix supérieur à celui-ci",
+    										" ", JOptionPane.INFORMATION_MESSAGE);
+    					} else {
+						// on ajoute l'enchère dans la table Enchere1
+						String preStmt = "insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values('"
+								+ email + "', " + idVente + ", " + prixProposeText.getText().toString()
+								+ ", CURRENT_TIMESTAMP" + ", " + quantiteBox.getSelectedItem().toString() + ")";
+						Requete requete = new Requete(preStmt);
+						requete.executeUpdateReq();
+
+						System.out.println(preStmt);
+
+    					}
+    				} else {//ne peut pas encherir plusieurs fois
+    	    			System.out.println("Encheres multiples non possible !");
+    	    			JOptionPane.showMessageDialog(null,	"Encheres multiples non possible !", " ", JOptionPane.INFORMATION_MESSAGE);
+    	    			Requete requeteEnchereM = new Requete("select COUNT(*)\r\n"
+    	    				+ "From Enchere1\r\n"
+    	    				+ "Where id_vente="	+ idVente + "\r\n"
+    	    				+ "AND email='" + email +  "'");
+    	    			boolean aDejaEncheri = requeteEnchereM.aDejaEncherir();
+    	    			if (aDejaEncheri) {
+    	    				JOptionPane.showMessageDialog(null,	"Encheres multiples non possible !\n Vous avez déjà enchéri !", " ", JOptionPane.INFORMATION_MESSAGE);
+    	    				} 					
+    				}
+				} else {//la vente est descendante
+					System.out.println("La vente est descendante !");
+					JOptionPane.showMessageDialog(null,	"La vente est descendante !", " ", JOptionPane.INFORMATION_MESSAGE);
+					
+					// on ajoute l'enchère dans la table Enchere1
+					String preStmt = "insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values('"
+							+ email + "', " + idVente + ", " + prixProposeText.getText().toString()
+							+ ", CURRENT_TIMESTAMP" + ", " + quantiteBox.getSelectedItem().toString() + ")";
+					Requete requete = new Requete(preStmt);
+					requete.executeUpdateReq();
+
+					System.out.println(preStmt);
+				}
+    			
+    			//multiplicité des enchères par un même utilisateur
+    			if (info[3]==1)
+    			
+    			
+    			
+
+				//on ferme la fenêtre à la fin de la manipulation
+				setVisible(false);
     		}
     	});
 
