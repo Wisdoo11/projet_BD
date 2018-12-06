@@ -3,10 +3,10 @@ insert into Utilisateur1 values ('seb@gmail.com', 'Herbreteau', 'Sebastien', '8 
 insert into Utilisateur1 values ('alex@gmail.com', 'Donne', 'Alex', '9 place Jean Moulin, 38000 Grenoble');
 insert into Utilisateur1 values ('vilayvos@gmail.com', 'Vilayvong', 'Sophia', '6 Place Pasteur, 38000 Grenoble');
 insert into Utilisateur1 values ('lucasv@gmail.com', 'Vilayvong', 'Lucas', '7 Rue du Havre, 75009 Paris');
-insert into Utilisateur1 values ('‎etienne.hurez@boulanger.fr', 'Hurez', '‎Etienne', '18 Avenue de la Motte, 59810 Lesquin');
+insert into Utilisateur1 values ('etienne.hurez@boulanger.fr', 'Hurez', 'Etienne', '18 Avenue de la Motte, 59810 Lesquin');
 insert into Utilisateur1 values ('josephine@gmail.com', 'De La Marre', 'Joséphine', '12 Esplanade des Droits de l Homme, 77185 Lognes');
-insert into Utilisateur1 values ('‎rick@gmail.com', 'Grimmes', 'Rick', '9 rue des Rôdeurs, 78000 Versailles');
-insert into Utilisateur1 values ('‎soleil@gmail.com', 'Galaxie', 'Soleil', '58 Avenue des Batignolles, 75008 Paris');
+insert into Utilisateur1 values ('rick@gmail.com', 'Grimmes', 'Rick', '9 rue des Rôdeurs, 78000 Versailles');
+insert into Utilisateur1 values ('soleil@gmail.com', 'Galaxie', 'Soleil', '58 Avenue des Batignolles, 75008 Paris');
 insert into Utilisateur1 values ('ballesteros.enrique@fnac-darty.fr', 'Ballesteros', 'Enrique', '9 Rue des Bateaux-Lavoirs, 94200 Ivry-sur-Seine');
 select * from Utilisateur1;
 
@@ -44,13 +44,13 @@ insert into Salle1(nom_categorie, type_vente, est_libre, est_revocable, enchere_
 select * from Salle1;
 
 --peuplage de la table Vente1
-insert into Vente1(id_vente, id_produit, id_salle, prix_depart, temps) values (1, 3, 1, 80, '04-DEC-18 03.02.08 PM'); --pour la Salle 1
-insert into Vente1(id_vente, id_produit, id_salle, prix_depart, temps) values (1, 4, 1, 50, '04-DEC-18 03.02.08 PM');
-insert into Vente1(id_vente, id_produit, id_salle, prix_depart, temps) values (1, 5, 1, 30, '04-DEC-18 03.02.08 PM');
+insert into Vente1(id_vente, id_produit, id_salle, prix_depart, temps) values (1, 3, 1, 80, '2018-12-06 10:02:08.0'); --pour la Salle 1
+insert into Vente1(id_vente, id_produit, id_salle, prix_depart, temps) values (1, 4, 1, 50, '2018-12-06 10:02:08.0');
+insert into Vente1(id_vente, id_produit, id_salle, prix_depart, temps) values (1, 5, 1, 30, '2018-12-06 10:02:08.0');
 select * from Vente1;
 
 
-insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values ('alex@gmail.com', 1, 8.2, CURRENT_TIMESTAMP, 2);
+insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values ('alex@gmail.com', 1, 8.2, '2018-12-06 10:15:00.0' , 2);
 select * from Enchere1;
 
 --peuplage de la table Caracteristique1

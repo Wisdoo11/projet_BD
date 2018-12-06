@@ -51,7 +51,7 @@ CREATE TABLE Vente1
   id_produit INT REFERENCES Produit1(id_produit),
   id_salle INT REFERENCES Salle1(id_salle),
   prix_depart FLOAT CHECK(prix_depart >= 0),
-  temps DATETIME -- date et heure de fin
+  temps DATE -- date et heure de fin au format YYYY-MM-DD HH24:MI:SS
 );
 
 
@@ -61,7 +61,7 @@ CREATE TABLE Enchere1
   email VARCHAR(100) REFERENCES Utilisateur1(email),
   id_vente INT REFERENCES Vente1(id_vente),
   prix_propose FLOAT CHECK(prix_propose >= 0),
-  temps TIMESTAMP,
+  temps DATE, -- date et heure de fin au format YYYY-MM-DD HH24:MI:SS
   quantite INT CHECK(quantite >= 0)
 );
 

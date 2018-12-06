@@ -47,10 +47,10 @@ public class Application {
 		
 
 	    //quelques requetes de tests
-	    String preStmt = "insert into Vente1(id_produit, id_salle, prix_depart, temps) values (3, 1, 80, TIMESTAMP('2018-12-04', '03.02.08'))";
+	    String preStmt = "select * from Vente1";
 	    Requete requete = new Requete(preStmt);
-	    requete.executeUpdateReq();
-	    //requete.execute();
+	    //requete.executeUpdateReq();
+	    requete.execute();
 	    
 	    System.out.println("");
 	    

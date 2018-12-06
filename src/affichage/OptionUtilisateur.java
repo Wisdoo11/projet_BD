@@ -20,12 +20,11 @@ public class OptionUtilisateur extends JDialog {
 	private JButton bouton1 = new JButton("Je veux vendre un produit");
 	private JButton bouton2 = new JButton("Je veux participer à une enchère");
 	private JButton bouton3 = new JButton("Me déconnecter");
-	private JButton bouton4 = new JButton("Ajouter des caractérisques à mes produits");
 	
 	public OptionUtilisateur(JFrame parent, String title, boolean modal, String email) {
 		super(parent, title, modal);
 		this.email = email;
-	    this.setSize(500, 350);
+	    this.setSize(500, 250);
 	    this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 	    this.setLocationRelativeTo(null);
 	    this.initComponent();
@@ -56,17 +55,12 @@ public class OptionUtilisateur extends JDialog {
 	 	b1.add(Box.createRigidArea(new Dimension(30,0)));
 	 	b1.add(bouton2);
 	 	
-	 	Box b3 = Box.createHorizontalBox(); 
-	 	b3.add(bouton4);
-	 	
 	 	Box b2 = Box.createHorizontalBox(); 
 	 	b2.add(bouton3);
 	 	    
 	 	Box box = Box.createVerticalBox();
 	 	box.add(Box.createRigidArea(new Dimension(0,20)));
 	 	box.add(b1);
-	 	box.add(Box.createRigidArea(new Dimension(0,20)));
-	 	box.add(b3);
 	 	box.add(Box.createRigidArea(new Dimension(0,30)));
 	 	box.add(b2);
 	 	

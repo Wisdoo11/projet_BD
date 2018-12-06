@@ -18,6 +18,12 @@ public class ListeProduit {
 			liste.add("Souris");
 			liste.add("Clavier");
 			liste.add("Ecran");
+		} else if (cat.equals("Gaming")) {
+			liste.add("Ordinateur bureau Gaming");
+			liste.add("Ordinateur portable Gaming");
+			liste.add("Souris Gaming");
+			liste.add("Clavier Gaming");
+			liste.add("Ecran Gaming");
 		} else if (cat.equals("Electromenager")) {
 			liste.add("Cafetière");
 			liste.add("Micro-onde");

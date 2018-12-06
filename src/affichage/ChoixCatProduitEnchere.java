@@ -48,7 +48,7 @@ public class ChoixCatProduitEnchere extends JDialog {
         panCategorie.setBackground(Color.white);
         panCategorie.setPreferredSize(new Dimension(250, 30));
 
-        Requete requete = new Requete("select nom from Categorie1");
+        Requete requete = new Requete("select distinct Produit1.nom_categorie from Vente1, Produit1 where Vente1.id_produit=Produit1.id_produit");
         ArrayList<String[]> selection = new ArrayList<String[]>();
         requete.getSelection(selection);
 

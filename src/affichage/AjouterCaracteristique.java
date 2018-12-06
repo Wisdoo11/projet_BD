@@ -119,10 +119,9 @@ public class AjouterCaracteristique extends JDialog {
 				int id = Integer.parseInt(idProduit);
 
     			while (itNom.hasNext() ) {
-    				
 					//sinon on l'ajoute à la base de données
 					preStmt = "insert into Caracteristique1(nom, id_produit, valeur) values('"
-							+ (String) itNom.next().getText() + "', " + id +	",'" + (String) itDescription.next().getText() + "')";
+							+ (String) itNom.next().getText() + "', " + id +	", '" + (String) itDescription.next().getText() + "')";
 					Requete requete = new Requete(preStmt);
 					requete.executeUpdateReq();
 					

@@ -231,9 +231,6 @@ public class FenetreAjoutProduits extends JDialog {
 
 				while (itProd.hasNext() ) {
 
-					String date = anneeBox.getSelectedItem().toString() + "-" + moisBox.getSelectedItem().toString() +"-" +
-							jourBox.getSelectedItem().toString() + " " + heureBox.getSelectedItem().toString() + ":" + minuteBox.getSelectedItem().toString() +
-							":" + secondeBox.getSelectedItem().toString() + ".0";
 					elt1 = Integer.parseInt(((String) itProd.next().getSelectedItem()).split(" - ")[0]); //on récupère l'id_produit du produit
 					elt2 = Integer.parseInt(itPrix.next().getText()); //on récupère son prix de départ
 					preStmt1 = "select id_produit from Vente1 where id_produit=" + elt1;
@@ -245,16 +242,28 @@ public class FenetreAjoutProduits extends JDialog {
 						JOptionPane.showMessageDialog(null, "Vous ne pouvez pas ajouter plusieurs fois le même produit", " ", JOptionPane.INFORMATION_MESSAGE);
 					} else {
 						//sinon on l'ajoute à la base de données
-						preStmt = "insert into Vente1(id_produit, id_salle, prix_depart, temps) values("
-								+ elt1 + ", " + salle +	"," + elt2 + ", " + date + ")"; //TODO récupérer le temps suivant le type de vente
-						Requete requete = new Requete(preStmt);
-						requete.executeUpdateReq();
+						if (typeDuree==0) {
+							//date et heure de fin
+							String date = anneeBox.getSelectedItem().toString() + "-" + moisBox.getSelectedItem().toString() +"-" +
+									jourBox.getSelectedItem().toString() + " " + heureBox.getSelectedItem().toString() + ":" + minuteBox.getSelectedItem().toString() +
+									":" + secondeBox.getSelectedItem().toString();
+							
+							preStmt = "insert into Vente1(id_produit, id_salle, prix_depart, temps) values("
+								+ elt1 + ", " + salle +	", " + elt2 + ", TO_DATE('" + date + "', 'YYYY-MM-DD HH24:MI:SS'))";
+							Requete requete = new Requete(preStmt);
+							requete.executeUpdateReq();
 
-						System.out.println(preStmt);
+							System.out.println(preStmt);
+						} else {
+							preStmt = "insert into Vente1(id_produit, id_salle, prix_depart, temps) values("+ elt1 + ", " + salle +	", " + elt2 + ", null)";
+							Requete requete = new Requete(preStmt);
+							requete.executeUpdateReq();
+							System.out.println(preStmt);
+						}
 					}
 
 				}
-				setVisible(false);    			
+				setVisible(false);
 			}
 		});
 
