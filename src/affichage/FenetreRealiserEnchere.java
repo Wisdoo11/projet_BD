@@ -33,7 +33,7 @@ public class FenetreRealiserEnchere extends JDialog {
 		this.categorie = categorie;
 		this.idVente = idVente;
 		this.idSalle = idSalle;
-		this.setSize(600, 300);
+		this.setSize(650, 400);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -69,17 +69,6 @@ public class FenetreRealiserEnchere extends JDialog {
     	panNom.setBorder(BorderFactory.createTitledBorder("Produit :"));
     	nomLabel = new JLabel("Nom du produit :" + nomProduit);
     	panNom.add(nomLabel);
-    	
-    	//le prix de l'enchère
-		JPanel panPrixPropose = new JPanel();	
-		panPrixPropose.setBackground(Color.white);
-		panPrixPropose.setPreferredSize(new Dimension(250, 80));
-		panPrixPropose.setBorder(BorderFactory.createTitledBorder("Prix proposé :"));
-		prixProposeLabel = new JLabel("Prix proposé :");
-		prixProposeText = new JTextField();
-		prixProposeText.setPreferredSize(new Dimension(150, 30));
-		panPrixPropose.add(prixProposeLabel);
-		panPrixPropose.add(prixProposeText);
 		
     	//la quantité de produit souhaitée
 		JPanel panQuantite = new JPanel();	
@@ -91,33 +80,59 @@ public class FenetreRealiserEnchere extends JDialog {
 		//on récupère le stock du produit
 		Requete requeteStock = new Requete("select Produit1.stock\r\n" +
 				"From Produit1, Vente1\r\n" +
-				"Where Produit1.id_produit=Vente1.id_produit\r\n"
+				"Where Produit1.id_produit=Vente1.id_produit\r\n" +
+				"AND Vente1.id_vente=" + idVente +"\r\n" +
+				"AND Vente1.id_salle=" + idSalle + "\r\n"
 				);
+		requeteStock.execute();
 		ArrayList<String[]> selection = new ArrayList<String[]>();
 		requeteStock.getSelection(selection);
 		
 		quantiteBox = new JComboBox<String>();
 		for (String[] elt : selection) {
 			for (String i:elt)
-			quantiteBox.addItem(i);
+				for (int j=1 ; j < Integer.parseInt(i)+1 ; j++) {
+					quantiteBox.addItem(j);
+				}
 		}
 		panQuantite.add(quantiteLabel);
 		panQuantite.add(quantiteBox);
+		
+    	//le prix de l'enchère
+		JPanel panPrixPropose = new JPanel();	
+		panPrixPropose.setBackground(Color.white);
+		panPrixPropose.setPreferredSize(new Dimension(250, 80));
+		panPrixPropose.setBorder(BorderFactory.createTitledBorder("Prix proposé :"));
+		prixProposeLabel = new JLabel("Prix total :");
+		prixProposeText = new JTextField();
+		prixProposeText.setPreferredSize(new Dimension(150, 30));
+		panPrixPropose.add(prixProposeLabel);
+		panPrixPropose.add(prixProposeText);
 
     	JPanel content = new JPanel();
     	content.setBackground(Color.white);
     	content.add(panEmail);
     	content.add(panCategorie);
     	content.add(panNom);
-    	content.add(panPrixPropose);
     	content.add(panQuantite);
+    	content.add(panPrixPropose);
 
     	JPanel control = new JPanel();
     	JButton okBouton = new JButton("OK");
 
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
-    			// TODO à finir
+    			// on ajoute l'enchère dans la table Enchere1
+    			String preStmt = "insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values('" +
+    					email + "', " + idVente  + ", " + prixProposeText.getText().toString() + ", CURRENT_TIMESTAMP" +
+    					", " + quantiteBox.getSelectedItem().toString() + ")";
+    			Requete requete = new Requete(preStmt);
+    			requete.executeUpdateReq();
+
+    	        System.out.println(preStmt);
+    	        
+    	        //on ferme la fenêtre à la fin de la manipulation
+    	        setVisible(false);
     		}
     	});
 

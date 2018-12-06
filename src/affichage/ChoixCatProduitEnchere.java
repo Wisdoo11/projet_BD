@@ -70,34 +70,37 @@ public class ChoixCatProduitEnchere extends JDialog {
 
         okBouton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent arg0) {
-            	System.out.print("Voici les produits qui sont vendus: ");
+            	System.out.print("Voici les produits qui sont vendus: \n");
             	//affiche les produits à vendre avec leurs caractéritisques
-            	Requete requete = new Requete("Select Produit1.id_produit, Produit1.nom, Caracteristique1.nom, Caracteristique1.valeur\r\n" + 
+            	System.out.println("id_produit, nom du produit, stock, caracteristique, description\n");
+            	Requete requete = new Requete("Select Produit1.id_produit, Produit1.nom, Produit1.stock, Caracteristique1.nom, Caracteristique1.valeur\r\n" + 
             			"From Salle1, Vente1, Produit1, Caracteristique1\r\n" + 
-            			"Where Salle1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" + 
-            			"AND Produit1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" + 
-            			"AND Vente1.id_salle = Salle1.id_salle\r\n" + 
-            			"AND Caracteristique1.id_produit = Produit1.id_produit\r\n" +
-            			"AND Vente1.id_produit = Produit1.id_produit\r\n" +
+            			"Where Salle1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" + 
+            			"AND Produit1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" + 
+            			"AND Vente1.id_salle=Salle1.id_salle\r\n" + 
+            			"AND Caracteristique1.id_produit=Produit1.id_produit\r\n" +
+            			"AND Vente1.id_produit=Produit1.id_produit\r\n" +
             			"UNION\r\n" +
-            			"Select Produit1.id_produit, Produit1.nom, NULL, NULL\r\n" + 
+            			"Select Produit1.id_produit, Produit1.nom, Produit1.stock, NULL, NULL\r\n" + 
             			"From Salle1, Vente1, Produit1\r\n" + 
-            			"Where Salle1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" +
-            			"AND Produit1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" + 
-            			"AND Vente1.id_salle = Salle1.id_salle\r\n" + 
-            			"AND Vente1.id_produit = Produit1.id_produit\r\n" +
+            			"Where Salle1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" +
+            			"AND Produit1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" + 
+            			"AND Vente1.id_salle=Salle1.id_salle\r\n" + 
+            			"AND Vente1.id_produit=Produit1.id_produit\r\n" +
             			"MINUS\r\n" +
-            			"Select Produit1.id_produit, Produit1.nom, NULL, NULL\r\n" + 
+            			"Select Produit1.id_produit, Produit1.nom, Produit1.stock, NULL, NULL\r\n" + 
             			"From Salle1, Vente1, Produit1, Caracteristique1\r\n" + 
-            			"Where Salle1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" + 
-            			"AND Produit1.nom_categorie = '" + (String) Categorie.getSelectedItem() + "'\r\n" + 
-            			"AND Vente1.id_salle = Salle1.id_salle\r\n" +
-            			"AND Caracteristique1.id_produit = Produit1.id_produit\r\n" +
-            			"AND Vente1.id_produit = Produit1.id_produit"
+            			"Where Salle1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" + 
+            			"AND Produit1.nom_categorie='" + (String) Categorie.getSelectedItem() + "'\r\n" + 
+            			"AND Vente1.id_salle=Salle1.id_salle\r\n" +
+            			"AND Caracteristique1.id_produit=Produit1.id_produit\r\n" +
+            			"AND Vente1.id_produit=Produit1.id_produit"
             			);
             	requete.execute();
-            	fenetreChoixProdEnchere = new FenetreChoixProduitEnchere(null, "Choissisez le produit à acheter", true, (String) Categorie.getSelectedItem(), email);
+            	fenetreChoixProdEnchere = new FenetreChoixProduitEnchere(null, "Choisissez le produit à acheter", true, (String) Categorie.getSelectedItem(), email);
             	fenetreChoixProdEnchere.afficher();
+            	
+            	setVisible(false);
             }
         });
 

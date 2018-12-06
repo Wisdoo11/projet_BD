@@ -56,6 +56,11 @@ Select distinct Produit1.nom_categorie
 From Vente1, Produit1
 Where Vente1.id_produit=Produit1.id_produit
 
+--pour récupérer le numéro de la salle et de la vente d'un produit
+Select distinct id_salle, id_vente\r\n
+From Vente1
+Where id_produit='1'
+
 --pour récupérer les salles qui vendent les produits d'une certaine catégorie
 Select Salle1.id_salle, Ventes1.id_ventes, Ventes1.id_produit, Produit1.nom
 From Salle1

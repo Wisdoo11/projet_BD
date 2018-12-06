@@ -60,7 +60,7 @@ public class FenetreChoixProduitEnchere extends JDialog {
 		panProduit.setPreferredSize(new Dimension(200, 80));
 		JLabel produit = new JLabel("Nom du produit : ");
 			
-		Requete requete = new Requete("Select Produit1.id_produit, Produit1.nom, Produit1.stock\r\n" + 
+		Requete requete = new Requete("Select Produit1.id_produit, Produit1.nom\r\n" + 
 				"From Salle1, Vente1, Produit1\r\n" + 
 				"Where Salle1.nom_categorie = '" + categorie +"'\r\n" + 
 				"AND Produit1.nom_categorie = '" + categorie + "'\r\n" + 
@@ -75,25 +75,6 @@ public class FenetreChoixProduitEnchere extends JDialog {
 		}
 		panProduit.add(produit);
 		panProduit.add(produitBox);
-		
-		//récupérer le numéro de la salle et de la vente
-		JPanel panId = new JPanel();	
-		panId.setBackground(Color.white);
-		panId.setPreferredSize(new Dimension(200, 80));
-		JLabel id = new JLabel("Nom du produit : ");
-			
-		Requete requete1 = new Requete("Select distinct id_salle, id_vente\r\n" +
-				"From Vente1\r\n" + 
-				"Where id_produit='" + produitBox.getSelectedItem().toString() + "'\r\n" +
-				"AND nom_categorie='" + categorie
-				);
-		ArrayList<String[]> selection1 = new ArrayList<String[]>();
-		requete1.getSelection(selection1);
-		
-		idBox = new JComboBox<String>();
-		for (String[] elt : selection) {
-			idBox.addItem(elt[0] + " - " + elt[1]);
-		}
 	    
 		//organisation visuelle
 	    Box box0 = Box.createVerticalBox();
@@ -118,12 +99,26 @@ public class FenetreChoixProduitEnchere extends JDialog {
     	
     	okBouton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
+				
 				//on récupère le numéro de la salle et le numéro de la vente
+				Requete requete1 = new Requete("Select distinct id_salle, id_vente\r\n" +
+						"From Vente1\r\n" + 
+						"Where id_produit=" + produitBox.getSelectedItem().toString().split(" - ")[0] + "\r\n"
+						);
+				ArrayList<String[]> selection1 = new ArrayList<String[]>();
+				requete1.getSelection(selection1);
+				
+				idBox = new JComboBox<String>();
+				for (String[] elt : selection1) {
+					idBox.addItem(elt[0] + " - " + elt[1]);
+				}
+				
 				String idSalle = idBox.getSelectedItem().toString().split(" - ")[0];
 				String idVente = idBox.getSelectedItem().toString().split(" - ")[1];
 				String nomProduit = produitBox.getSelectedItem().toString().split(" - ")[1];
+				System.out.println(idSalle + ", " + idVente + ", " + nomProduit);
 				
-				fenetre = new FenetreRealiserEnchere(null, "Bienvenue dans la salle de vente du produit", true, email, categorie, nomProduit, idVente, idSalle);
+				fenetre = new FenetreRealiserEnchere(null, "Bienvenue dans la salle n° " + idSalle + "de vente du produit", true, email, categorie, nomProduit, idVente, idSalle);
 				fenetre.afficher();
 				
 				setVisible(false);

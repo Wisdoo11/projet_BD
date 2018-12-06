@@ -47,7 +47,7 @@ public class Application {
 		
 
 	    //quelques requetes de tests
-	    String preStmt = "select * from Vente1";
+	    String preStmt = "select * from Enchere1";
 	    Requete requete = new Requete(preStmt);
 	    //requete.executeUpdateReq();
 	    requete.execute();
