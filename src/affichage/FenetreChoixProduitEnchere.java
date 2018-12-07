@@ -116,6 +116,7 @@ public class FenetreChoixProduitEnchere extends JDialog {
 				String idSalle = idBox.getSelectedItem().toString().split(" - ")[0];
 				String idVente = idBox.getSelectedItem().toString().split(" - ")[1];
 				String nomProduit = produitBox.getSelectedItem().toString().split(" - ")[1];
+				String idProduit = produitBox.getSelectedItem().toString().split(" - ")[0];
 				System.out.println("Salle de vente du produit : " + idSalle + "\nSon numéro de vente : " + idVente + "\nSon nom : " + nomProduit);
 				
 				//pour récuperer le prix courant de l'enchère
@@ -142,7 +143,8 @@ public class FenetreChoixProduitEnchere extends JDialog {
     			JOptionPane.showMessageDialog(null, "Le prix de départ est : " + prixCourant + "euros", " ", JOptionPane.INFORMATION_MESSAGE);
     			
 				
-				fenetre = new FenetreRealiserEnchere(null, "Bienvenue dans la salle n° " + idSalle + "de vente du produit", true, email, categorie, nomProduit, idVente, idSalle, prixCourant);
+				fenetre = new FenetreRealiserEnchere(null, "Bienvenue dans la salle n° " + idSalle + "de vente du produit",
+						true, email, categorie, nomProduit, idVente, idSalle, prixCourant, idProduit);
 				fenetre.afficher();
 				
 				setVisible(false);

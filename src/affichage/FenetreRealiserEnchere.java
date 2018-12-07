@@ -21,13 +21,13 @@ import projet_BD.Requete;
 
 public class FenetreRealiserEnchere extends JDialog {
 	
-	private String email, categorie, idVente, idSalle, nomProduit, prixCourant;
+	private String email, categorie, idVente, idSalle, nomProduit, prixCourant, idProduit;
 	private JLabel emailLabel, nomLabel, CategorieLabel, prixProposeLabel, quantiteLabel;
 	private JTextField prixProposeText;
 	private JComboBox quantiteBox;
 
 	public FenetreRealiserEnchere(JFrame parent, String title, boolean modal, String email, String categorie, 
-			String nomProduit, String idVente, String idSalle, String prixCourant){
+			String nomProduit, String idVente, String idSalle, String prixCourant, String idProduit){
 		super(parent, title, modal);
 		this.email = email;
 		this.nomProduit = nomProduit;
@@ -35,6 +35,7 @@ public class FenetreRealiserEnchere extends JDialog {
 		this.idVente = idVente;
 		this.idSalle = idSalle;
 		this.prixCourant = prixCourant;
+		this.idProduit = idProduit;
 		this.setSize(650, 400);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -159,17 +160,36 @@ public class FenetreRealiserEnchere extends JDialog {
 
     					}
     				} else {//ne peut pas encherir plusieurs fois
-    	    			System.out.println("Encheres multiples non possible !");
-    	    			JOptionPane.showMessageDialog(null,	"Encheres multiples non possible !", " ", JOptionPane.INFORMATION_MESSAGE);
-    	    			Requete requeteEnchereM = new Requete("select COUNT(*)\r\n"
-    	    				+ "From Enchere1\r\n"
-    	    				+ "Where id_vente="	+ idVente + "\r\n"
-    	    				+ "AND email='" + email +  "'");
-    	    			boolean aDejaEncheri = requeteEnchereM.aDejaEncherir();
-    	    			if (aDejaEncheri) {
-    	    				JOptionPane.showMessageDialog(null,	"Encheres multiples non possible !\n Vous avez déjà enchéri !", " ", JOptionPane.INFORMATION_MESSAGE);
-    	    				} 					
-    				}
+						System.out.println("Encheres multiples non possible !");
+						JOptionPane.showMessageDialog(null, "Encheres multiples non possible !", " ", JOptionPane.INFORMATION_MESSAGE);
+						Requete requeteEnchereM = new Requete("select COUNT(*)\r\n"
+								+ "From Enchere1\r\n"
+								+ "Where id_vente=" + idVente + "\r\n"
+								+ "AND email='" + email + "'");
+						boolean aDejaEncheri = requeteEnchereM.aDejaEncherir();
+						if (aDejaEncheri) {
+							JOptionPane.showMessageDialog(null, "Encheres multiples non possible !\n Vous avez déjà enchéri !", " ", JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							if (Float.parseFloat(prixProposeText.getText().toString())
+									/ Float.parseFloat(quantiteBox.getSelectedItem().toString()) <= Float
+									.parseFloat(prixCourant)) {
+								JOptionPane.showMessageDialog(null,
+										"Le prix de départ est : " + prixCourant + "euros"
+												+ "\nVeuillez rentrer un prix supérieur à celui-ci",
+										" ", JOptionPane.INFORMATION_MESSAGE);
+							} else {
+								// on ajoute l'enchère dans la table Enchere1
+								String preStmt = "insert into Enchere1(email, id_vente, prix_propose, temps, quantite) values('"
+										+ email + "', " + idVente + ", " + prixProposeText.getText().toString()
+										+ ", CURRENT_TIMESTAMP" + ", " + quantiteBox.getSelectedItem().toString() + ")";
+								Requete requete = new Requete(preStmt);
+								requete.executeUpdateReq();
+
+								System.out.println(preStmt);
+							}
+						}
+					}
+
 				} else {//la vente est descendante
 					System.out.println("La vente est descendante !");
 					JOptionPane.showMessageDialog(null,	"La vente est descendante !", " ", JOptionPane.INFORMATION_MESSAGE);
@@ -181,7 +201,14 @@ public class FenetreRealiserEnchere extends JDialog {
 					Requete requete = new Requete(preStmt);
 					requete.executeUpdateReq();
 
-					System.out.println(preStmt);
+					// on met à jour la quantité de la vente
+					String preStmt1 = "update Produit1 set stock = stock - " + quantiteBox.getSelectedItem().toString() + "where id_produit = " +
+							idProduit;
+					Requete requete1 = new Requete(preStmt1);
+					requete1.executeUpdateReq();
+
+
+					System.out.println(preStmt1);
 				}
     			
     			//multiplicité des enchères par un même utilisateur
