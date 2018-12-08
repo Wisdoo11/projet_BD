@@ -142,32 +142,39 @@ public class FenetreVendreProduit extends JDialog{
 
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
-    			//on ajoute le nouveau produit dans la base de données
-    			String preStmt = "insert into Produit1(nom_categorie, email, nom, prix_revient, stock)"
-    					+ " values ('" + (String) categorieBox.getSelectedItem() 
-    			+ "', '" + emailText.getText() + "', '" + (String) produit.getSelectedItem() + "', "
-    					+ prixText.getText() + ", " + stockText.getText() + ")";
-    			Requete requete = new Requete(preStmt);
-    			//on récupère l'identifiant du nouveau produit 
-			    String id = requete.recupIdProduit((String) categorieBox.getSelectedItem(), emailText.getText(), 
-			    		(String) produit.getSelectedItem());
-			    
-			    //on affiche les informations sur le nouveau produit
-    			info = new InfoProduitAVendre(emailText.getText(), (String) categorieBox.getSelectedItem(), (String) produit.getSelectedItem(), 
-    					prixText.getText(), stockText.getText(), id);
-    	        JOptionPane.showMessageDialog(null, info.toString(), "Récapitulatif sur le produit à vendre", JOptionPane.INFORMATION_MESSAGE);
-    	        
-    	        System.out.println("insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock)"
-    					+ " values (" + id + ", '" + (String) categorieBox.getSelectedItem() 
-    			+ "', '" + emailText.getText() + "', '" + (String) produit.getSelectedItem() + "', "
-    					+ prixText.getText() + ", " + stockText.getText() + ")");
-    	        
-    	        //on ferme la fenêtre à la fin de la manipulation
-    	        setVisible(false);
-    	        
-    	        fenetreAjoutCaract = new NbCaracteristique(null, "Choisissez le nombre de caractéristiques à ajouter", 
-    	        	true, email, id, (String) categorieBox.getSelectedItem());
-    	        fenetreAjoutCaract.afficher();
+    			
+    			if (Integer.parseInt(prixText.getText()) <= 0 || Integer.parseInt(stockText.getText()) <= 0) {
+    				JOptionPane.showMessageDialog(null, "Le prix et le stock doivent être > 0 !", " ", JOptionPane.INFORMATION_MESSAGE);
+    				setVisible(false);
+    			} else {
+    			
+	    			//on ajoute le nouveau produit dans la base de données
+	    			String preStmt = "insert into Produit1(nom_categorie, email, nom, prix_revient, stock)"
+	    					+ " values ('" + (String) categorieBox.getSelectedItem() 
+	    			+ "', '" + emailText.getText() + "', '" + (String) produit.getSelectedItem() + "', "
+	    					+ prixText.getText() + ", " + stockText.getText() + ")";
+	    			Requete requete = new Requete(preStmt);
+	    			//on récupère l'identifiant du nouveau produit 
+				    String id = requete.recupIdProduit((String) categorieBox.getSelectedItem(), emailText.getText(), 
+				    		(String) produit.getSelectedItem());
+				    
+				    //on affiche les informations sur le nouveau produit
+	    			info = new InfoProduitAVendre(emailText.getText(), (String) categorieBox.getSelectedItem(), (String) produit.getSelectedItem(), 
+	    					prixText.getText(), stockText.getText(), id);
+	    	        JOptionPane.showMessageDialog(null, info.toString(), "Récapitulatif sur le produit à vendre", JOptionPane.INFORMATION_MESSAGE);
+	    	        
+	    	        System.out.println("insert into Produit1(id_produit, nom_categorie, email, nom, prix_revient, stock)"
+	    					+ " values (" + id + ", '" + (String) categorieBox.getSelectedItem() 
+	    			+ "', '" + emailText.getText() + "', '" + (String) produit.getSelectedItem() + "', "
+	    					+ prixText.getText() + ", " + stockText.getText() + ")");
+	    	        
+	    	        //on ferme la fenêtre à la fin de la manipulation
+	    	        setVisible(false);
+	    	        
+	    	        fenetreAjoutCaract = new NbCaracteristique(null, "Choisissez le nombre de caractéristiques à ajouter", 
+	    	        	true, email, id, (String) categorieBox.getSelectedItem());
+	    	        fenetreAjoutCaract.afficher();
+    			}
     		}
     	});
 

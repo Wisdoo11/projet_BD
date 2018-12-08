@@ -17,16 +17,13 @@ import javax.swing.JTextField;
 
 import projet_BD.Requete;
 
-public class ChoixCatProduit extends JDialog {
-
+public class ChoixCatSalleAdmin extends JDialog {
+	
 	private JComboBox<String> Categorie;
-	private String email;
 	private boolean estAdmin;
-	private JTextField emailText;
 
-	public ChoixCatProduit(JFrame parent, String title, boolean modal, String email, boolean estAdmin){
+	public ChoixCatSalleAdmin(JFrame parent, String title, boolean modal, boolean estAdmin){
 		super(parent, title, modal);
-		this.email = email;
 		this.estAdmin = estAdmin;
 		this.setSize(300, 200);
 		this.setLocationRelativeTo(null);
@@ -50,16 +47,13 @@ public class ChoixCatProduit extends JDialog {
 		JLabel label = new JLabel(labelText);
 		panel.add(label);
 		setContentPane(panel);
-		
-		//email
-		emailText = new JTextField(email);
 	
 		//La catégorie de la salle
 		JPanel panCategorie = new JPanel();
 		panCategorie.setBackground(Color.white);
 		panCategorie.setPreferredSize(new Dimension(250, 30));
 	
-		Requete requete = new Requete("select nom from Categorie1");
+		Requete requete = new Requete("select distinct nom_categorie from Produit1");
 		ArrayList<String[]> selection = new ArrayList<String[]>();
 		requete.getSelection(selection);
 	
@@ -81,9 +75,9 @@ public class ChoixCatProduit extends JDialog {
 
     	okBouton.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent arg0) {
-    	 		FenetreVendreProduit fenetreVendre = new FenetreVendreProduit(null,"Vous souhaitez vendre un produit", true, email, (String) Categorie.getSelectedItem());
-    	 		fenetreVendre.afficher();
-    	 		setVisible(false);
+    			FenetreTypeSalle fenetreSalle = new FenetreTypeSalle(null, "Type de Salle de vente", true, (String) Categorie.getSelectedItem());
+    			fenetreSalle.afficher();
+    			setVisible(false);
     		}
     	});
 

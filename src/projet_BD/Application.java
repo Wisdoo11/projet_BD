@@ -12,7 +12,7 @@ public class Application {
 	public static void main(String[] args) throws SQLException {	
 
 	    //quelques requetes de tests
-	    String preStmt = "select * from enchere1";
+	    String preStmt = "select * from vente1 where id_vente=13";
 	    Requete requete = new Requete(preStmt);
 	    //requete.executeUpdateReq();
 	    requete.execute();

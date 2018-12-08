@@ -2,7 +2,6 @@
 insert into Utilisateur1 values ('seb@gmail.com', 'Herbreteau', 'Sebastien', '8 place Jean Moulin, 38000 Grenoble');
 insert into Utilisateur1 values ('alex@gmail.com', 'Donne', 'Alex', '9 place Jean Moulin, 38000 Grenoble');
 insert into Utilisateur1 values ('vilayvos@gmail.com', 'Vilayvong', 'Sophia', '6 Place Pasteur, 38000 Grenoble');
-insert into Utilisateur1 values ('lucasv@gmail.com', 'Vilayvong', 'Lucas', '7 Rue du Havre, 75009 Paris');
 insert into Utilisateur1 values ('etienne.hurez@boulanger.fr', 'Hurez', 'Etienne', '18 Avenue de la Motte, 59810 Lesquin');
 insert into Utilisateur1 values ('josephine@gmail.com', 'De La Marre', 'Joséphine', '12 Esplanade des Droits de l Homme, 77185 Lognes');
 insert into Utilisateur1 values ('rick@gmail.com', 'Grimmes', 'Rick', '9 rue des Rodeurs, 78000 Versailles');
@@ -29,7 +28,7 @@ insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Ve
 insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Vetements', 'vilayvos@gmail.com', 'Jeans', 35, 5);
 insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Vetements', 'josephine@gmail.com', 'Chemise', 20, 6);
 insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Electromenager', 'etienne.hurez@boulanger.fr', 'Boulloire', 20.99, 25);
-insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Electromenager', 'etienne.hurez@boulanger.fr', 'Cafetière', 200.5, 15);
+insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Electromenager', 'etienne.hurez@boulanger.fr', 'Cafetiere', 200.5, 15);
 insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Electromenager', 'vilayvos@gmail.com', 'Four', 599, 1);
 insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Electromenager', 'rick@gmail.com', 'Micro-onde', 22, 8);
 insert into Produit1(nom_categorie, email, nom, prix_revient, stock) values ('Informatique', 'vilayvos@gmail.com', 'Clavier', 9.50, 5);

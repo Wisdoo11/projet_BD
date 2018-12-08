@@ -123,6 +123,7 @@ public class FenetreChoixProduitEnchere extends JDialog {
     			String prixCourant;
     			
     			Requete requete00 = new Requete("select COUNT(*) from Enchere1 where id_vente=" + idVente);
+    			System.out.println("Nom d'enchères : ");
     			requete00.execute();
     			//si pas d'enchère on récupère le prix de départ
     			if(requete00.premiereEnchereDeVente()) {
@@ -130,25 +131,43 @@ public class FenetreChoixProduitEnchere extends JDialog {
     				prixCourant = requete0b.recupPrixDepartEnchere();
     				System.out.println("Le prix de départ est : " + prixCourant + "euros");
     			} else {
-        			String preStmt0 = "select prix_propose, quantite\r\n"
+        			String preStmt0 = "select prix_propose, quantite, temps\r\n"
         					+ "From Enchere1\r\n"
         					+ "Where id_vente=" + idVente + "\r\n"
         					+ "Group by id_enchere, email, id_vente, prix_propose, temps, quantite\r\n"
-        					+ "HAVING temps=max(temps)";
+        					+ "HAVING temps=max(temps)"
+        					+ "order by temps desc";
         			Requete requete0 = new Requete(preStmt0);
+        			System.out.println("Les enchères des autres utlisateurs : ");
+        			requete0.execute();
         			prixCourant = "" + requete0.recupPrixCourantEnchere() + "";
         			System.out.println("Le prix courant est : " + prixCourant);
     			}
 
     			JOptionPane.showMessageDialog(null, "Le prix de départ est : " + prixCourant + "euros", " ", JOptionPane.INFORMATION_MESSAGE);
     			
+    			int[] info;
+    			int type, libre, revocable, enchereM; //ici on ne gère pas la fin des enchères :
+    			Requete requeteTypeVente = new Requete("select type_vente, est_libre, est_revocable, enchere_multiple\r\n"
+    					+ "From Salle1\r\n"
+    					+ "Where id_salle=" + idSalle);
+    			info = requeteTypeVente.recupTypeSalle();
+    			
+    			if (info[0]==0) { //descendante
+    				JOptionPane.showMessageDialog(null,	"La vente est descendante !", " ", JOptionPane.INFORMATION_MESSAGE);
+    			} else {//montante
+    				JOptionPane.showMessageDialog(null,	"La vente est montante !", " ", JOptionPane.INFORMATION_MESSAGE);
+    			}
+    			
+    			if (info[3]==1) {
+    				JOptionPane.showMessageDialog(null, "Encheres multiples possible !", " ", JOptionPane.INFORMATION_MESSAGE);
+    			} else {
+    				JOptionPane.showMessageDialog(null, "Encheres multiples non possible !", " ", JOptionPane.INFORMATION_MESSAGE);
+    			}
 				
 				fenetre = new FenetreRealiserEnchere(null, "Bienvenue dans la salle n° " + idSalle + "de vente du produit",
 						true, email, categorie, nomProduit, idVente, idSalle, prixCourant, idProduit);
 				fenetre.afficher();
-				
-				setVisible(false);
-				
     		}
     	});
     	

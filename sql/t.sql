@@ -58,7 +58,7 @@ Where Vente1.id_produit=Produit1.id_produit;
 --pour récupérer le numéro de la salle et de la vente d'un produit
 Select distinct id_salle, id_vente\r\n
 From Vente1
-Where id_produit='1';
+Where id_produit=1;
 
 --pour récupérer le prix courant d'une Vente
 --on commence par vérifier s'il y a des enchères pour cette vente
@@ -67,8 +67,26 @@ select COUNT(*) from Enchere1 where id_vente=idVente
 select prix_depart from Vente1 where id_vente=idVente
 --prix courant correpond à prix_propose/stock (java code java)
 --si des enchères existent, on récupère le dernier prix propose : prix_propose/stock
-select prix_propose, quantite
+select prix_propose, quantite, temps
 From Enchere1
 Where id_vente=idVente
 Group by id_enchere, email, id_vente, prix_propose, temps, quantite
 HAVING temps=max(temps)
+Order by temps desc;
+
+
+--pour récupérer les gaganants d'une vente montante
+select Enchere1.email, Enchere1.prix_propose, Enchere1.quantite, Enchere1.temps
+From Enchere1, Vente1
+Where Enchere1.id_vente=Vente1.id_vente
+And id_vente=idVente
+And where Enchere1.temps <= Vente1.temps
+Order by temps Desc
+
+--on récupère la date et l'heure de fin de vente
+select distinct Produit1.temps
+From Enchere1, Produit1
+Where Enchere1.id_vente=Produit1.id_vente
+And Enchere1.id_vente= idVente
+Group by temps
+Having temps = MAX(temps)
