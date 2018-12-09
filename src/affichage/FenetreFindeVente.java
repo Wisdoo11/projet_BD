@@ -137,7 +137,7 @@ public class FenetreFindeVente extends JDialog {
                 } else { //si la vente est montante
                 	//on détermine et recupère les gagnants, on les affiche par ordre décroissant de prix unitaire
                 	//i.e.: heure et date de l'enchère
-                	if (info_vente[0]==0) {
+                	if (info_vente[1]==0) {
 	                    Requete requeteVenteLimiteeMont = new Requete("select Enchere1.email, Enchere1.prix_propose, Enchere1.quantite, Enchere1.temps\r\n"
 	                        + "From Enchere1, Vente1\r\n"
 	                        + "Where Enchere1.id_vente=Vente1.id_vente\r\n"
