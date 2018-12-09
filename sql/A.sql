@@ -1,3 +1,5 @@
+Begin;
+
 DROP TABLE Caracteristique1;
 DROP TABLE Enchere1;
 DROP TABLE Vente1;
@@ -73,3 +75,5 @@ CREATE TABLE Caracteristique1
   valeur VARCHAR(250),
   PRIMARY KEY(nom, id_produit)
 );
+
+commit;

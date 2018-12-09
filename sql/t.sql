@@ -1,3 +1,49 @@
+--Transaction :
+--Mise en place d’une salle de vente et sélection de produits
+--déjà disponibles à la vente et permettant le choix du type d’enchères et du prix de départ
+Begin;
+--choix de la catégorie
+SELECT DISTINCT nom_categorie FROM Produit1 ;
+--ajout de la salle de vente
+INSERT INTO Salle1(nom_categorie, type_vente, est_libre, est_revocable, enchere_multiple) values ('Vetement', 0, 1, 1, 1);
+--on récupère l’id de la salle créée
+SELECT max(id_salle)
+FROM Salle1
+WHERE nom_categorie='Vetement'
+AND type_vente=1 AND est_libre=1 AND est_revocable=0 AND enchere_multiple=1
+--ajouter les produits souhaites parmis ceux autorisés
+insert into Vente1(id_produit, id_salle, prix_depart, temps) values (3, 1, 80, TO_DATE('2018-12-06 10:02:08', 'YYYY-MM-DD HH24:MI:SS'));
+insert into Vente1(id_produit, id_salle, prix_depart, temps) values (4, 1, 50, TO_DATE('2018-12-06 10:02:08', 'YYYY-MM-DD HH24:MI:SS'));
+insert into Vente1(id_produit, id_salle, prix_depart, temps) values (5, 1, 30, TO_DATE('2018-12-06 10:02:08', 'YYYY-MM-DD HH24:MI:SS'));
+commit;
+
+--pour récupérer les produits disponile la Vente
+--dans l'éventualité de les ajouter dans une salle de vente
+Select Produit1.id_produit, Produit1.nom, Produit1.prix_revient
+From Produit1
+Where Produit1.nom_categorie = 'Vetement'
+MINUS
+Select Produit1.id_produit, Produit1.nom, Produit1.prix_revient
+From Salle1, Vente1, Produit1
+Where Salle1.nom_categorie = 'Vetement'
+AND Produit1.nom_categorie = 'Vetement'
+AND Vente1.id_salle = Salle1.id_salle
+AND Vente1.id_produit = Produit1.id_produit
+
+
+--Transaction
+--
+
+
+
+
+
+
+
+
+
+
+
 --pour récupérer les id produits des produits de la catégorie Vetement
 -- qui ne sont pas encore mis à la vente
 Select distinct Produit1.id_produit, Produit1.nom
